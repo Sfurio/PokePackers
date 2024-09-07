@@ -11,6 +11,19 @@ class Card(models.Model):
         ('PSA', 'PSA')
     ]
 
+    GRADE_CHOICES = [
+        ('Not Graded', 'Not Graded'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+        ('5','5'),
+        ('6','6'),
+        ('7','7'),
+        ('8','8'),
+        ('9','9'),
+        ('10','10'),
+    ]
     SET_CHOICES = [
         # Base Set Era
         ('Base Set', 'Base Set'),
@@ -135,6 +148,7 @@ class Card(models.Model):
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    grade = models.CharField(max_length=20, choices=GRADE_CHOICES)
     image = models.ImageField(upload_to='cards/')
     
     def __str__(self):
