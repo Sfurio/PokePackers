@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'contactstyle.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-JkwKoylUp8oDJy+pIv/UE/1JTwIfYH8S+uV7vkr/KPiTmV7Fd3f6U4wjnUzR6eECVJGFrQglr+v0hLvIX+R0LA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="contact-page">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <div class="contact-info">
+                <div class="button-wrapper">
+                    <a href="tel:+14076195738" class="btn">Click to Give us a Call!</a>
+                    <a href="mailto:WebsiteWarriorsContact@gmail.com" class="btn">Email us with any Concerns!</a>
+                </div>
+                <div class="logo">
+                    <img src="{% static 'WebsiteWarriors.png' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

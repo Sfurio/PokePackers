@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PokePackers{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+<header>
+    <nav id="basenav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">PokePackers</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item{% if request.path == '/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/Regular/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'Regular' %}">Regular</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/Reverse/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'Reverse' %}">Reverse Foil</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/Foil/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'Foil' %}">Foil</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/Rare/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'Rare' %}">Rare</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/PSA/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'PSA' %}">PSA Graded</a>
+                    </li>
+                    <li class="nav-item{% if request.path == '/contact/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'contact' %}">Get In Touch</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+<footer class="bg-dark text-light">
+    <div class="container py-4 text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h3>Our Information</h3>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="{% url 'home' %}" class="text-light">Home</a></li>
+                    <li class="list-inline-item"><a href="{% url 'cart' %}" class="text-light">Cart</a></li>
+                    <li class="list-inline-item"><a href="{% url 'contact' %}" class="text-light">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8">
+                <p class="text-muted">&copy; {% now "Y" %} PokePackers. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foil Cards</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'regular.css' %}">
+</head>
+<body>
+<div id="foil-cards-page" class="container mt-5">
+    <h1 class="text-center">Foil Cards</h1>
+
+    <!-- Sorting Options -->
+    <div class="row my-4">
+        <div class="col-md-6">
+            <h4>Sort by:</h4>
+            <a href="?sort=price" class="btn btn-outline-primary">Price</a>
+            <a href="?sort=series" class="btn btn-outline-secondary">Set</a>
+            <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
+        </div>
+    </div>
+
+    <!-- Card Display -->
+    <div class="row">
+        {% for card in cards %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100">
+                <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.name }}</h5>
+                    <p class="card-text">Series: {{ card.set }}</p>
+                    <p class="card-text">Price: ${{ card.price }}</p>
+                    <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination (Optional) -->
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ request.GET.sort }}">Previous</a>
+                </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item{% if page_obj.number == num %} active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ request.GET.sort }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js
