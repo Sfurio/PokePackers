@@ -29,6 +29,11 @@ urlpatterns = [
     path('Contact/', views.contact, name='contact'),
     path('Cart/', views.cart, name='cart'),
     path('PSA/', views.PSA_Graded, name='PSA'),
+    path('add_to_cart/<int:card_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.Cart, name='cart'),
+    path('update_cart/<int:item_id>/', views.update_cart, name='update_cart'),
+    path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('card/<int:card_id>/', views.card_detail, name='card_detail'),
 
 
 ]

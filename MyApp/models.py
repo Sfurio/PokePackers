@@ -160,7 +160,7 @@ class CardAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'price', 'series')  # Changed 'set' to 'series'
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session_id = models.CharField(max_length=255)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     added_on = models.DateTimeField(auto_now_add=True)

@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from .models import Card,Cart
+from django.shortcuts import render, get_object_or_404  # Ensure this is at the top
 
 
 
@@ -125,10 +126,22 @@ def PSA_Graded(request):
 
 def add_to_cart(request, card_id):
     card = get_object_or_404(Card, id=card_id)
-    cart, created = Cart.objects.get_or_create(user=request.user, card=card)
-    cart.quantity += 1
-    cart.save()
-    return redirect('Cart')
+    
+    # Ensure session key exists
+    if not request.session.session_key:
+        request.session.create()
+
+    session_id = request.session.session_key
+
+    # Try to get the Cart item; if not found, create one with quantity = 1
+    cart, created = Cart.objects.get_or_create(session_id=session_id, card=card, defaults={'quantity': 1})
+
+    if not created:
+        # If the Cart item already exists, increase the quantity
+        cart.quantity += 1
+        cart.save()
+    
+    return redirect('cart')  # Redirect to a cart page or similar
 
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user)
@@ -139,6 +152,16 @@ def cart(request):
         'cart_total': cart_total,
     }
     return render(request, 'cart.html', context)
+
+
+def card_detail(request, card_id):
+    # Fetch the card with the given ID
+    card = get_object_or_404(Card, id=card_id)
+    
+    return render(request, 'card_detail.html', {
+        'card': card
+    })
+
 
 def update_cart(request, item_id):
     item = Cart.objects.get(id=item_id, user=request.user)

@@ -30,16 +30,22 @@
     <div class="row">
         {% for card in cards %}
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <div class="card h-100">
-                <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ card.name }}</h5>
-                    <p class="card-text">Series: {{ card.set }}</p>
-                    <p class="card-text">Price: ${{ card.price }}</p>
-                    <p class="card-text">Grade: {{ card.grade }}</p>
-                    <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary">Add to Cart</a>
+            <!-- Make the entire card clickable -->
+            <a href="{% url 'card_detail' card.id %}" class="text-decoration-none text-dark">
+                <div class="card h-100">
+                    <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ card.name }}</h5>
+                        <p class="card-text">Series: {{ card.set }}</p>
+                        <p class="card-text">Price: ${{ card.price }}</p>
+                        <p class="card-text">Grade: {{ card.grade }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary">Add to Cart</a>
+                        <a href="{% url 'card_detail' card.id %}" class="btn btn-secondary">Learn More</a>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         {% endfor %}
     </div>
