@@ -33,7 +33,7 @@
             <!-- Make the entire card clickable -->
             <a href="{% url 'card_detail' card.id %}" class="text-decoration-none text-dark">
                 <div class="card h-100">
-                    <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    <img src="{% static 'cards/{{ card.image_filename }}' %}" class="card-img-top" alt="{{ card.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ card.name }}</h5>
                         <p class="card-text">Series: {{ card.set }}</p>
