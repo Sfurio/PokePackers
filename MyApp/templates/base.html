@@ -41,6 +41,14 @@
                     <li class="nav-item{% if request.path == '/contact/' %} active{% endif %}">
                         <a class="nav-link" href="{% url 'contact' %}">Get In Touch</a>
                     </li>
+                    <li class="nav-item{% if request.path == '/cart/' %} active{% endif %}">
+                        <a class="nav-link" href="{% url 'cart' %}">
+                            Cart
+                            {% if cart_item_count %}
+                            <span class="badge badge-light">{{ cart_item_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

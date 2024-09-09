@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from MyApp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,10 +32,11 @@ urlpatterns = [
     path('Cart/', views.cart, name='cart'),
     path('PSA/', views.PSA_Graded, name='PSA'),
     path('add_to_cart/<int:card_id>/', views.add_to_cart, name='add_to_cart'),
-    path('cart/', views.Cart, name='cart'),
+    path('cart/', views.cart, name='cart'),
     path('update_cart/<int:item_id>/', views.update_cart, name='update_cart'),
     path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('card/<int:card_id>/', views.card_detail, name='card_detail'),
+    path('checkout/', views.checkout, name='checkout'),
 
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -33,10 +33,15 @@
             <!-- Make the entire card clickable -->
             <a href="{% url 'card_detail' card.id %}" class="text-decoration-none text-dark">
                 <div class="card h-100">
-                    <img src="{% static 'cards/{{ card.image_filename }}' %}" class="card-img-top" alt="{{ card.name }}">
+                    <!-- Display the first image of the card -->
+                    {% if card.images.all %}
+                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    {% else %}
+                    <img src="{% static 'default-card-image.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ card.name }}</h5>
-                        <p class="card-text">Series: {{ card.set }}</p>
+                        <p class="card-text">Series: {{ card.series }}</p>
                         <p class="card-text">Price: ${{ card.price }}</p>
                         <p class="card-text">Grade: {{ card.grade }}</p>
                     </div>

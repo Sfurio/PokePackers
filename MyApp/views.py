@@ -126,32 +126,44 @@ def PSA_Graded(request):
 
 def add_to_cart(request, card_id):
     card = get_object_or_404(Card, id=card_id)
-    
-    # Ensure session key exists
-    if not request.session.session_key:
-        request.session.create()
-
     session_id = request.session.session_key
+    if not session_id:
+        request.session.create()
+        session_id = request.session.session_key
 
-    # Try to get the Cart item; if not found, create one with quantity = 1
-    cart, created = Cart.objects.get_or_create(session_id=session_id, card=card, defaults={'quantity': 1})
+    # Default quantity to 1 if not provided
+    quantity = int(request.GET.get('quantity', 1))
+
+    # Check if item is already in the cart
+    cart_item, created = Cart.objects.get_or_create(
+        session_id=session_id,
+        card=card,
+        defaults={'quantity': quantity}
+    )
 
     if not created:
-        # If the Cart item already exists, increase the quantity
-        cart.quantity += 1
-        cart.save()
-    
-    return redirect('cart')  # Redirect to a cart page or similar
+        # If item already exists, update the quantity
+        cart_item.quantity += quantity
+        cart_item.save()
+
+    return redirect('cart')
 
 def cart(request):
-    cart_items = Cart.objects.filter(user=request.user)
-    cart_total = sum(item.total_price for item in cart_items)
+    session_id = request.session.session_key
+    if not session_id:
+        request.session.create()
+        session_id = request.session.session_key
+
+    # Filter cart items by session_id
+    cart_items = Cart.objects.filter(session_id=session_id)
+    cart_total = sum(item.card.price * item.quantity for item in cart_items)
+
+    # Adding total_price to each cart item
+    for item in cart_items:
+        item.total_price = item.card.price * item.quantity
     
-    context = {
-        'cart_items': cart_items,
-        'cart_total': cart_total,
-    }
-    return render(request, 'cart.html', context)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'cart_total': cart_total})
+
 
 
 def card_detail(request, card_id):
@@ -164,15 +176,31 @@ def card_detail(request, card_id):
 
 
 def update_cart(request, item_id):
-    item = Cart.objects.get(id=item_id, user=request.user)
+    session_id = request.session.session_key
+    if not session_id:
+        return redirect('cart')
+
+    # Get the cart item by session_id
+    item = get_object_or_404(Cart, id=item_id, session_id=session_id)
     item.quantity = int(request.POST['quantity'])
     item.save()
+
     return redirect('cart')
 
+
 def remove_from_cart(request, item_id):
-    item = Cart.objects.get(id=item_id, user=request.user)
+    session_id = request.session.session_key
+    if not session_id:
+        return redirect('cart')
+
+    # Get the cart item by session_id
+    item = get_object_or_404(Cart, id=item_id, session_id=session_id)
     item.delete()
+
     return redirect('cart')
 
 def contact(request):
     return render(request, 'Contact.html')
+
+def checkout(request):
+    return render(request, 'checkout.html')
