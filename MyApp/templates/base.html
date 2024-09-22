@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}PokePackers{% endblock %}</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}PokePackers{% endblock %}</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- Custom Global CSS -->
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <!-- Page-Specific CSS -->
+        {% block extra_css %}{% endblock %}
+    </head>
+    
 <body>
 <header>
-    <nav id="basenav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav id="basenav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">PokePackers</a>
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'pokepackers.png' %}" alt="PokePackers Logo" height="40">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,33 +60,29 @@
     </nav>
 </header>
 
-<main role="main">
-    <div class="container">
+<main role="main" class="mt-5 pt-4">
+    <div class="container py-5">
         {% block content %}
         {% endblock %}
     </div>
 </main>
-<footer class="bg-dark text-light">
-    <div class="container py-4 text-center">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3>Our Information</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="{% url 'home' %}" class="text-light">Home</a></li>
-                    <li class="list-inline-item"><a href="{% url 'cart' %}" class="text-light">Cart</a></li>
-                    <li class="list-inline-item"><a href="{% url 'contact' %}" class="text-light">Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-8">
-                <p class="text-muted">&copy; {% now "Y" %} PokePackers. All rights reserved.</p>
-            </div>
-        </div>
+
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+        <h5>Stay Connected</h5>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i> Twitter</a></li>
+            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i> Instagram</a></li>
+        </ul>
+        <hr class="bg-light">
+        <p class="text-muted mb-0">&copy; {% now "Y" %} PokePackers. All rights reserved.</p>
     </div>
 </footer>
 
-<!-- Bootstrap JS (optional) -->
+<!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

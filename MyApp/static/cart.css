@@ -1,74 +1,75 @@
-/* Cart Page Styling */
-#cart-page {
-    padding-top: 56px;
+/* Cart Page Styles */
+
+/* Table Styling */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-#cart-page h1 {
-    margin-bottom: 30px;
-    font-weight: bold;
-    color: #343a40;
-}
-
-#cart-page .table {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#cart-page .thead-dark th {
+.table thead th {
     background-color: #343a40;
     color: #ffffff;
 }
 
-#cart-page .img-thumbnail {
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.img-thumbnail {
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
-#cart-page .quantity-input {
-    width: 70px;
-    text-align: center;
+/* Form Styling */
+.quantity-input {
+    width: 80px;
 }
 
-#cart-page .btn-outline-primary {
-    margin-top: 5px;
+/* Button Styling */
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-#cart-page .btn-danger {
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.btn-danger {
     background-color: #dc3545;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-color: #dc3545;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-#cart-page .btn-danger:hover {
+.btn-danger:hover {
     background-color: #c82333;
+    border-color: #bd2130;
 }
 
-#cart-page .btn-success {
+.btn-success {
     background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-color: #28a745;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-#cart-page .btn-success:hover {
+.btn-success:hover {
     background-color: #218838;
+    border-color: #1e7e34;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    #cart-page .table-responsive {
-        overflow-x: scroll;
+    .table {
+        font-size: 0.875rem;
     }
-
-    #cart-page .btn-success,
-    #cart-page .btn-danger {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    #cart-page .quantity-input {
-        width: 100%;
+    
+    .quantity-input {
+        width: 60px;
     }
 }

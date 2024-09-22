@@ -1,0 +1,54 @@
+/* Card Details Page Styles */
+
+/* Carousel Styling */
+.carousel-item img {
+    height: 400px; /* Adjust the height of the carousel images */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Card Details Styling */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1rem;
+    color: #555;
+}
+
+strong {
+    color: #222;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    p {
+        font-size: 0.9rem;
+    }
+}

@@ -149,6 +149,7 @@ class Card(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     grade = models.CharField(max_length=20, choices=GRADE_CHOICES)
+    inventory = models.PositiveIntegerField(default=0)  # New field to track inventory
 
     
     def __str__(self):
@@ -161,6 +162,24 @@ class CardImage(models.Model):
     def __str__(self):
         return f"Image for {self.card.name}"
 
+
+class Order(models.Model):
+    full_name = models.CharField(max_length=200)
+    address = models.CharField(max_length=500)
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Order {self.id} by {self.full_name}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Card, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name}"
 
 class Cart(models.Model):
     session_id = models.CharField(max_length=255)

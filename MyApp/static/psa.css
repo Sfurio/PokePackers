@@ -1,0 +1,75 @@
+/* PSA Cards Page Styles */
+
+/* Card Styling */
+.card {
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Button Styling */
+.btn-primary, .btn-secondary {
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: #6c757d;
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.pagination .page-link {
+    color: #007bff;
+}
+
+.pagination .page-link:hover {
+    color: #0056b3;
+    background-color: #e9ecef;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+    }
+}

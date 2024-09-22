@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cart.css' %}">
+{% endblock %}
+
 {% block content %}
 <div id="cart-page" class="container mt-5">
-    <h1 class="text-center">Shopping Cart</h1>
+    <h1 class="text-center mb-4">Shopping Cart</h1>
 
     {% if cart_items %}
     <div class="table-responsive mt-4">
@@ -31,11 +35,13 @@
                     <td>{{ item.card.name }}</td>
                     <td>${{ item.card.price|floatformat:2 }}</td>
                     <td>
-                        <form action="{% url 'update_cart' item.id %}" method="post">
-                            {% csrf_token %}
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control quantity-input">
-                            <button type="submit" class="btn btn-sm btn-outline-primary mt-2">Update</button>
-                        </form>
+                        <div class="d-flex align-items-center">
+                            <form action="{% url 'update_cart' item.id %}" method="post" class="d-flex">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control quantity-input">
+                                <button type="submit" class="btn btn-sm btn-outline-primary ml-2">Update</button>
+                            </form>
+                        </div>
                     </td>
                     <td>${{ item.total_price|floatformat:2 }}</td>
                     <td>
@@ -62,7 +68,7 @@
 </div>
 {% endblock %}
 
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

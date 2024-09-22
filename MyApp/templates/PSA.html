@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}PSA Cards{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'psa.css' %}">
+{% endblock %}
+
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSA Cards</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'psa.css' %}">
-</head>
-<body>
 <div id="psa-cards-page" class="container mt-5">
-    <h1 class="text-center">PSA Cards</h1>
+    <h1 class="text-center mb-4">PSA Graded Cards</h1>
 
     <!-- Sorting Options -->
     <div class="row my-4">
@@ -30,9 +26,8 @@
     <div class="row">
         {% for card in cards %}
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-            <!-- Make the entire card clickable -->
-            <a href="{% url 'card_detail' card.id %}" class="text-decoration-none text-dark">
-                <div class="card h-100">
+            <a href="{% url 'card_detail' card.id %}" class="card-link text-decoration-none">
+                <div class="card h-100 shadow-sm">
                     <!-- Display the first image of the card -->
                     {% if card.images.all %}
                     <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}">
@@ -46,8 +41,8 @@
                         <p class="card-text">Grade: {{ card.grade }}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary">Add to Cart</a>
-                        <a href="{% url 'card_detail' card.id %}" class="btn btn-secondary">Learn More</a>
+                        <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary btn-sm">Add to Cart</a>
+                        <a href="{% url 'card_detail' card.id %}" class="btn btn-secondary btn-sm">Learn More</a>
                     </div>
                 </div>
             </a>
@@ -55,7 +50,7 @@
         {% endfor %}
     </div>
 
-    <!-- Pagination (Optional) -->
+    <!-- Pagination -->
     <div class="row justify-content-center">
         <div class="col-auto">
             {% if is_paginated %}
@@ -81,7 +76,3 @@
     </div>
 </div>
 {% endblock %}
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>

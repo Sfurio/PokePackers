@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Card, CardImage
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'price', 'series')
+    list_display = ('name', 'type', 'price', 'series','inventory')
 
 class CardImageAdmin(admin.ModelAdmin):
     list_display = ('card', 'image')
