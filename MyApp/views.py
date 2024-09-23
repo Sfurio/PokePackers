@@ -1,13 +1,42 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Card, Cart, Order, OrderItem
+from django.contrib import messages
 
 
 from django.core.mail import send_mail
 
 import stripe
 from django.conf import settings
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
+def create_checkout_session(request):
+    if request.method == 'POST':
+        # Get cart details
+        cart = request.session.get('cart', {})
+        total = sum(item['product'].price * item['quantity'] for item in cart.values())
+
+        # Create a Stripe Checkout session
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': 'PokePackers Order',
+                    },
+                    'unit_amount': int(total * 100),  # Convert dollars to cents
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=request.build_absolute_uri('/checkout_success/'),
+            cancel_url=request.build_absolute_uri('/checkout/'),
+        )
+
+        return JsonResponse({'id': session.id})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def checkout_success_view(request):
     return render(request, 'checkout_success.html')
@@ -288,12 +317,85 @@ def checkout(request):
 
     return render(request, 'checkout.html')
 def checkout_view(request):
+    # Ensure session exists
+    session_id = request.session.session_key
+    if not session_id:
+        request.session.create()
+        session_id = request.session.session_key
+
+    # Get cart items for the current session
+    cart_items = Cart.objects.filter(session_id=session_id)
+    
+    if not cart_items.exists():
+        messages.error(request, "Your cart is empty.")
+        return redirect('cart')
+
+    # Calculate the total price for the order
+    total = sum(item.card.price * item.quantity for item in cart_items)
+
     if request.method == "POST":
-        # Process the form data here and handle payment integration (Stripe, PayPal)
-        return redirect('checkout_success')  # Redirect to success page after payment
+        stripe_token = request.POST.get('stripeToken')
+        full_name = request.POST.get('full_name')
+        address = request.POST.get('address')
+        email = request.POST.get('email')
 
-    # Example: Get cart from session
-    cart = request.session.get('cart', {})
-    total = sum(item['product'].price * item['quantity'] for item in cart.values())
+        if not stripe_token or not full_name or not address or not email:
+            messages.error(request, "All fields are required.")
+            return render(request, 'checkout.html', {
+                'cart_items': cart_items,
+                'total': total,
+                'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY
+            })
 
-    return render(request, 'checkout.html', {'cart': cart, 'total': total})
+        # Create a Stripe charge
+        try:
+            charge = stripe.Charge.create(
+                amount=int(total * 100),  # Stripe accepts the amount in cents
+                currency="usd",
+                source=stripe_token,
+                description="PokePackers Order"
+            )
+
+            # Create the order in the database
+            order = Order.objects.create(
+                full_name=full_name,
+                address=address,
+                email=email,
+                total_price=total
+            )
+
+            # Create the order items and adjust inventory
+            for item in cart_items:
+                OrderItem.objects.create(order=order, product=item.card, quantity=item.quantity)
+
+                # Update the inventory
+                if item.card.inventory >= item.quantity:
+                    item.card.inventory -= item.quantity
+                    item.card.save()
+                else:
+                    messages.error(request, f"Sorry, not enough stock for {item.card.name}.")
+                    return render(request, 'checkout.html', {
+                        'cart_items': cart_items,
+                        'total': total,
+                        'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY
+                    })
+
+            # Clear the cart after successful purchase
+            cart_items.delete()
+
+            # Redirect to success page
+            return redirect('checkout_success')
+
+        except stripe.error.CardError as e:
+            messages.error(request, "Your card was declined.")
+        except stripe.error.StripeError as e:
+            messages.error(request, "There was an error processing your payment. Please try again.")
+        except Exception as e:
+            messages.error(request, "An unexpected error occurred. Please try again.")
+
+    # Render the checkout page with cart items and total
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total': total,
+        'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY  # Pass Stripe publishable key
+    })

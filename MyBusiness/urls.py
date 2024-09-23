@@ -38,6 +38,7 @@ urlpatterns = [
     path('card/<int:card_id>/', views.card_detail, name='card_detail'),
     path('checkout/', views.checkout_view, name='checkout'),
     path('checkout-success/<int:order_id>/', views.checkout_success_view, name='checkout_success'),
+    path('create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

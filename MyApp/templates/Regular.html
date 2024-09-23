@@ -1,76 +1,78 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Regular Cards{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'psa.css' %}">
+{% endblock %}
+
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regular Cards</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'regular.css' %}">
-</head>
-<body>
-<div id="regular-cards-page" class="container mt-5">
-    <div class="container mt-5">
-        <h1 class="text-center">Regular Cards</h1>
+<div id="psa-cards-page" class="container mt-5">
+    <h1 class="text-center mb-4">PSA Graded Cards</h1>
 
-        <!-- Sorting Options -->
-        <div class="row my-4">
-            <div class="col-md-6">
-                <h4>Sort by:</h4>
-                <a href="?sort=price" class="btn btn-outline-primary">Price</a>
-                <a href="?sort=series" class="btn btn-outline-secondary">Set</a>
-                <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
-            </div>
+    <!-- Sorting Options -->
+    <div class="row my-4">
+        <div class="col-md-6">
+            <h4>Sort by:</h4>
+            <a href="?sort=price" class="btn btn-outline-primary">Price</a>
+            <a href="?sort=series" class="btn btn-outline-secondary">Set</a>
+            <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
+            <a href="?sort=grade" class="btn btn-outline-warning">Grade</a>
         </div>
+    </div>
 
-        <!-- Card Display -->
-        <div class="row">
-            {% for card in cards %}
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card h-100">
-                    <img src="{{ card.image.url }}" class="card-img-top" alt="{{ card.name }}">
+    <!-- Card Display -->
+    <div class="row">
+        {% for card in cards %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <a href="{% url 'card_detail' card.id %}" class="card-link text-decoration-none">
+                <div class="card h-100 shadow-sm">
+                    <!-- Display the first image of the card -->
+                    {% if card.images.all %}
+                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    {% else %}
+                    <img src="{% static 'default-card-image.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ card.name }}</h5>
-                        <p class="card-text">Series: {{ card.set }}</p>
+                        <p class="card-text">Series: {{ card.series }}</p>
                         <p class="card-text">Price: ${{ card.price }}</p>
-                        <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary">Add to Cart</a>
+                        <p class="card-text">Grade: {{ card.grade }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{% url 'add_to_cart' card.id %}" class="btn btn-primary btn-sm">Add to Cart</a>
+                        <a href="{% url 'card_detail' card.id %}" class="btn btn-secondary btn-sm">Learn More</a>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
+            </a>
         </div>
+        {% endfor %}
+    </div>
 
-        <!-- Pagination (Optional) -->
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                {% if is_paginated %}
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ request.GET.sort }}">Previous</a>
-                    </li>
-                    {% endif %}
-                    {% for num in page_obj.paginator.page_range %}
-                    <li class="page-item{% if page_obj.number == num %} active{% endif %}">
-                        <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}">{{ num }}</a>
-                    </li>
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ request.GET.sort }}">Next</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <!-- Pagination -->
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            {% if is_paginated %}
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ request.GET.sort }}">Previous</a>
+                </li>
                 {% endif %}
-            </div>
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item{% if page_obj.number == num %} active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ request.GET.sort }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endblock %}
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
