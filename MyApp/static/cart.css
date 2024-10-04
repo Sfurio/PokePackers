@@ -1,4 +1,14 @@
-/* Cart Page Styles */
+
+
+h1 {
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+h4 {
+    font-weight: 400;
+    color: #007bff;
+}
 
 /* Table Styling */
 .table {
@@ -7,8 +17,10 @@
 }
 
 .table thead th {
-    background-color: #343a40;
+    background-color: #007bff;
     color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .table tbody tr {
@@ -16,29 +28,43 @@
 }
 
 .table tbody tr:hover {
-    background-color: #f8f9fa;
+    background-color: rgba(0, 123, 255, 0.05);
 }
 
 .img-thumbnail {
-    border: none;
-    border-radius: 5px;
+    width: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Styling */
 .quantity-input {
     width: 80px;
+    transition: all 0.3s ease;
+}
+
+.quantity-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Button Styling */
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .btn-outline-primary {
-    border-color: #007bff;
     color: #007bff;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    background-color: #ffffff;
+    border-color: #007bff;
+    box-shadow: none;
 }
 
 .btn-outline-primary:hover {
-    background-color: #007bff;
     color: #ffffff;
+    background-color: #007bff;
 }
 
 .btn-danger {
@@ -53,23 +79,25 @@
 }
 
 .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    background-image: linear-gradient(45deg, #28a745, #218838);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
 }
 
 .btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
+    background-image: linear-gradient(45deg, #218838, #1e7e34);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .table {
-        font-size: 0.875rem;
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
     }
     
-    .quantity-input {
-        width: 60px;
+    .trust-signals {
+        text-align: center;
     }
 }

@@ -1,27 +1,60 @@
-/* Card Details Page Styles */
 
 /* Carousel Styling */
-.carousel-item img {
-    height: 400px; /* Adjust the height of the carousel images */
-    object-fit: cover;
+.carousel-item {
+    position: relative;
+}
+
+.image-container {
+    border: 2px solid #000;
     border-radius: 10px;
+    overflow: hidden; /* Ensures the image doesn't overflow the container */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 100%; /* Ensure the container fits within its parent */
+    height: 400px; /* Define a fixed height */
+}
+
+.magnifiable {
+    width: 100%; /* Ensure the image scales to fit the container width */
+    height: 100%; /* Ensure the image also scales to fit the container height */
+    object-fit: contain; /* Ensure the image fits within the container without cropping */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.magnifiable:hover {
+    transform: scale(1.5); /* Zoom effect */
+    cursor: zoom-in;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Card Details Styling */
-h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 20px;
+.card-details {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
-p {
-    font-size: 1rem;
+.card-details:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.card-detail {
+    font-size: 1.1rem;
     color: #555;
+    margin-bottom: 15px;
 }
 
 strong {
     color: #222;
+    font-weight: 600;
 }
 
 /* Button Styling */
@@ -29,26 +62,40 @@ strong {
     background-color: #007bff;
     border-color: #007bff;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.6);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .carousel-item img {
+    .magnifiable {
         height: 300px;
+    }
+
+    .card-title {
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 576px) {
-    h1 {
-        font-size: 1.5rem;
+    .card-title {
+        font-size: 1.75rem;
     }
-    
-    p {
-        font-size: 0.9rem;
+
+    .card-detail {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+        padding: 10px 20px;
     }
 }

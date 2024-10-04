@@ -1,6 +1,4 @@
-/* Base Styles for PokePackers */
-
-/* General Reset */
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -8,73 +6,132 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: white;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    color: #2c3e50;
 }
 
-a {
-    color: #f8f9fa;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
+
+h1 {
+    font-weight: 600;
+    font-size: 2.5rem;
 }
 
-a:hover {
-    color: #ffc107;
+h4 {
+    font-weight: 400;
 }
 
-/* Navbar Styling */
+
+
+.navbar {
+    background-color: #ffffff !important; /* Ensure the white background */
+    opacity: 1 !important; /* Ensure full opacity */
+    padding: 15px 0;
+    transition: background-color 0.3s ease;
+}
+
 .navbar-brand img {
-    max-height: 50px;
+    height: 80px;
 }
 
-.navbar-dark .navbar-nav .nav-link {
-    padding: 10px 15px;
+.nav-link {
+    color: black !important;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: all 0.2s ease;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
-    background-color: #343a40;
+.nav-link:hover, .nav-item.active .nav-link {
+    background-color:rgba(27, 28, 99, 0.2);
     border-radius: 5px;
 }
 
-/* Main Content */
+.navbar-toggler {
+    border: none;
+}
+
+/* Main content */
 main {
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1140px;
+    margin: 0 auto;
 }
 
-/* Footer Styling */
+/* Footer */
 footer {
-    background-color: #212529;
-    color: #f8f9fa;
+    background-color: white;
+    color: #fff;
+    padding: 40px 0;
 }
 
-footer ul li {
-    display: inline-block;
-    margin: 0 10px;
+footer .list-inline-item a {
+    color: #adb5bd;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
-footer ul li a {
-    color: #f8f9fa;
-    transition: color 0.2s ease-in-out;
+footer .list-inline-item a:hover {
+    color: #fff;
 }
 
-footer ul li a:hover {
-    color: #ffc107;
+footer h5 {
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
-footer p {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #6c757d;
+footer hr {
+    background-color: white;
 }
 
-/* Media Queries */
+/* Buttons */
+button, .btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #ffdd33;
+    transform: translateY(-3px);
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('/path/to/hero-background.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+}
+
+/* Responsiveness */
 @media (max-width: 768px) {
-    .navbar-nav {
-        text-align: center;
+    .navbar-brand img {
+        height: 30px;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
     }
 }

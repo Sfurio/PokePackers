@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'cart.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -27,9 +28,9 @@
                 <tr>
                     <td>
                         {% if item.card.images.first %}
-                        <img src="{{ item.card.images.first.image.url }}" alt="{{ item.card.name }}" class="img-thumbnail" width="100">
+                        <img src="{{ item.card.images.first.image.url }}" alt="{{ item.card.name }}" class="img-thumbnail" width="120">
                         {% else %}
-                        <img src="{% static 'default-card-image.jpg' %}" alt="Default Image" class="img-thumbnail" width="100">
+                        <img src="{% static 'default-card-image.jpg' %}" alt="Default Image" class="img-thumbnail" width="120">
                         {% endif %}
                     </td>
                     <td>{{ item.card.name }}</td>
@@ -38,8 +39,10 @@
                         <div class="d-flex align-items-center">
                             <form action="{% url 'update_cart' item.id %}" method="post" class="d-flex">
                                 {% csrf_token %}
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control quantity-input">
-                                <button type="submit" class="btn btn-sm btn-outline-primary ml-2">Update</button>
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+                                       max="{{ item.card.inventory }}" class="form-control quantity-input">
+                                <button type="submit" class="btn btn-sm btn-outline-primary ml-2" 
+                                        {% if item.card.inventory == 0 %}disabled{% endif %}>Update</button>
                             </form>
                         </div>
                     </td>
@@ -59,6 +62,8 @@
         </div>
         <div class="col-md-6 text-right">
             <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+            <div class="trust-signals text-right mt-2">
+            </div>
         </div>
     </div>
 
@@ -68,7 +73,6 @@
 </div>
 {% endblock %}
 
-<!-- Include Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

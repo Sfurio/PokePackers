@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="{% static 'home.css' %}">
 {% endblock %}
 {% block content %}
-<div class="hero-section">
+
+<div class="hero-section" style="background-image: url('{% static 'pokebanner2.png' %}'); height: 400px;">
     <div class="hero-content text-center">
         <h1>Welcome to PokePackers</h1>
         <p>Your one-stop shop for Pokémon cards</p>
@@ -13,22 +14,31 @@
 </div>
 
 <main>
-    <!-- About Us Section -->
-    <section id="about" class="about-section py-5 text-center">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>PokePackers is dedicated to providing collectors with the finest selection of Pokémon cards. From Regular cards to PSA graded gems, our range of cards has something for every collector.</p>
+<!-- About Us Section -->
+<section id="about" class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center"> <!-- Align items vertically centered -->
+            <!-- Logo Column -->
+            <div class="col-md-4 text-center mb-4 mb-md-0"> <!-- Responsive margin -->
+                <img src="{% static 'pokepackers.png' %}" alt="PokePackers Logo" class="img-fluid" style="max-width: 200px;"> <!-- Adjust the max-width to fit the layout -->
+            </div>
+            <!-- Text Column -->
+            <div class="col-md-8 text-center text-md-left"> <!-- Text left-aligned on larger screens -->
+                <h2>About Us</h2>
+                <p>PokePackers is dedicated to providing collectors with the finest selection of Pokémon cards. From regular cards to PSA-graded gems, our range of cards has something for every collector.</p>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Featured Products Section -->
     <section id="products" class="products-section py-5 text-center bg-light">
-        <div class="container">
+        <div class="container"> <!-- Keep the container here for proper alignment -->
             <h2>Our Product Range</h2>
             <div class="row mt-4">
                 <div class="col-md-4">
                     <div class="product-card">
-                        <img src="{% static 'pokepackers.png' %}" alt="Regular Cards" class="img-fluid">
+                        <img src="{% static 'regular.png' %}" alt="Regular Cards" class="img-fluid">
                         <h3>Regular Cards</h3>
                         <p>Browse our selection of standard Pokémon cards.</p>
                         <a href="{% url 'Regular' %}" class="btn btn-secondary">Shop Regular Cards</a>
@@ -36,15 +46,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="product-card">
-                        <img src="{% static 'pokepackers.png' %}" alt="Reverse Foil" class="img-fluid">
-                        <h3>Reverse Foil</h3>
-                        <p>Shiny and beautiful, check out our Reverse Foils.</p>
-                        <a href="{% url 'Reverse' %}" class="btn btn-secondary">Shop Reverse Foils</a>
+                        <img src="{% static 'rare.png' %}" alt="Reverse Foil" class="img-fluid">
+                        <h3>Rare Cards</h3>
+                        <p>View the Variety of Rare Pokémon cards we have to offer.</p>
+                        <a href="{% url 'Rare' %}" class="btn btn-secondary">Shop Rare Cards</a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="product-card">
-                        <img src="{% static 'pokepackers.png' %}" alt="PSA Graded Cards" class="img-fluid">
+                        <img src="{% static 'psa.png' %}" alt="PSA Graded Cards" class="img-fluid">
                         <h3>PSA Graded Cards</h3>
                         <p>Find high-grade, professionally graded Pokémon cards.</p>
                         <a href="{% url 'PSA' %}" class="btn btn-secondary">Shop PSA Cards</a>
@@ -56,10 +66,10 @@
 
     <!-- Call to Action Section -->
     <section class="cta-section py-5 text-center">
-        <div class="container">
+        <div class="cta-content">
             <h2>Ready to complete your collection?</h2>
             <p>Explore our vast inventory of rare and exclusive Pokémon cards.</p>
-            <a href="{% url 'home' %}" class="btn btn-primary">Start Shopping</a>
+            <a href="{% url 'Regular' %}" class="btn btn-primary">Start Shopping</a>
         </div>
     </section>
 </main>

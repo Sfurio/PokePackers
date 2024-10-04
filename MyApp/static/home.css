@@ -1,35 +1,60 @@
-/* Home Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%; /* Ensure that the body fills the entire height of the viewport */
+}
+
+
+
 .hero-section {
-    background: url("{% static 'hero-background.jpg' %}") no-repeat center center;
-    background-size: cover;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    text-align: center;
+    width: 100vw; /* Set width to 100% of the viewport width */
+    position: relative; /* Position relative for absolute positioning of content */
+    left: 50%; /* Move it to the center */
+    right: 50%; /* Move it to the center */
+    margin-left: -50vw; /* Pull it back by half the viewport width */
+    margin-right: -50vw; /* Pull it back by half the viewport width */
+    height: 400px; /* Fixed height for the hero section */
+    background-size: cover; /* Ensure the image covers the entire section */
+    background-position: center center; /* Keep the image centered */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    
 }
 
-.hero-section h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.hero-section p {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.hero-section .btn-primary {
-    font-size: 1.25rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 30px;
+/* Hero content styling */
+.hero-content {
+    position: absolute; /* Position the content in the center */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the content's own width and height */
+    background-color: rgba(56, 56, 56, 0.5); /* Light grey background with some transparency */
+    padding: 0px; /* Add some padding */
+    border-radius: 8px; /* Rounded corners */
+    color: white; /* Text color */
+    text-align: center; /* Center text */
 }
 
 /* About Section */
+.about-logo {
+    max-width: 100%; /* Ensure the logo is responsive */
+    height: auto;
+    margin-bottom: 20px; /* Optional margin below the image on small screens */
+}
+
+@media (max-width: 768px) {
+    .about-logo {
+        max-width: 70%; /* Reduce logo size on smaller screens */
+        margin: 0 auto 20px; /* Center logo on smaller screens */
+    }
+}
+
+
+/* About Section */
 .about-section {
-    background-color: #f8f9fa;
+    background-color: white;
     padding: 60px 0;
 }
 
@@ -95,31 +120,41 @@
 }
 
 /* CTA Section */
+/* Ensure the section takes up the full width */
 .cta-section {
-    background-color: #343a40;
-    color: white;
-    padding: 60px 0;
+    width: 100vw; /* Full viewport width */
+    background-color: white;
+    padding: 60px 0; /* Top and bottom padding */
+    margin-left: calc(-50vw + 50%); /* Aligns section to full width */
+    color:black;
+}
+
+.cta-content {
+    max-width: 1200px; /* Optional: limit text width for readability */
+    margin: 0 auto;
+    padding: 0 20px; /* Padding on the sides for smaller screens */
+    text-align: center;
 }
 
 .cta-section h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
 .cta-section p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    margin-bottom: 30px;
 }
 
-.cta-section .btn-primary {
-    font-size: 1.25rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 30px;
+.cta-section .btn {
+    padding: 12px 30px;
+    font-size: 1.2rem;
 }
+
 
 /* Footer Styles */
 footer {
-    background-color: #f8f9fa;
+    background-color: white;
     padding: 20px 0;
 }
 

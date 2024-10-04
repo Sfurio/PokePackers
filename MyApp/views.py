@@ -114,7 +114,7 @@ def reverse_cards(request):
     if sort_option == 'price':
         cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('set')
+        cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('series')
     elif sort_option == 'name':
         cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('name')
     else:
@@ -138,7 +138,7 @@ def foil_cards(request):
     if sort_option == 'price':
         cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('set')
+        cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('series')
     elif sort_option == 'name':
         cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('name')
     else:
@@ -162,7 +162,7 @@ def rare_cards(request):
     if sort_option == 'price':
         cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('set')
+        cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('series')
     elif sort_option == 'name':
         cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('name')
     else:
@@ -186,7 +186,7 @@ def PSA_Graded(request):
     if sort_option == 'price':
         cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('set')
+        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('series')
     elif sort_option == 'name':
         cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('name')
     elif sort_option == 'grade':
