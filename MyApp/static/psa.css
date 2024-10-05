@@ -3,90 +3,94 @@
 /* Card Styling */
 .card {
     border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     background-color: #ffffff;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
 /* Ensuring the image fits uniformly */
 .card-img-top {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    height: 350px;
+    height: 320px;  /* Slightly reduce height for a more compact design */
     width: 100%;
-    object-fit: cover; /* Ensures the image fits the box while maintaining aspect ratio */
-    background-color: #f8f9fa; /* Fallback color if the image doesn't load */
+    object-fit: cover;
+    background-color: #f0f2f5; /* Softer fallback color */
 }
 
+/* Card title and text styling */
 .card-title {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 600;  /* Slightly reduced weight for a cleaner look */
     color: #212529;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;  /* Reduced margin for better spacing */
 }
 
 .card-text {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #6c757d;
+    margin-bottom: 0.5rem;  /* Add margin for better spacing */
 }
 
+/* Card footer adjustments */
 .card-footer {
     background-color: transparent;
     border-top: none;
+    padding-top: 0.75rem;  /* Add padding for spacing between body and footer */
 }
 
 /* Button Styling */
 .btn-primary, .btn-secondary {
-    transition: background-color 0.3s ease;
-    border-radius: 50px; /* Rounded buttons for a modern look */
-    padding: 0.5rem 1.25rem;
+    transition: background-color 0.25s ease;
+    border-radius: 50px;
+    padding: 0.45rem 1.15rem;  /* Adjusted padding for consistency */
     font-size: 0.9rem;
 }
 
 .btn-primary:hover {
-    background-color: #e0a800;
+    background-color: #d69500;  /* Slightly softer hover color */
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: #495057;  /* Darker hover for better contrast */
 }
 
 /* Sorting Buttons */
 .btn-outline-primary, .btn-outline-secondary, .btn-outline-success, .btn-outline-warning {
     border-radius: 50px;
-    padding: 0.5rem 1.25rem;
+    padding: 0.45rem 1.15rem;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .btn-outline-primary:hover {
-    background-color: #007bff;
+    background-color: #0056cc;
     color: #fff;
 }
 
 .btn-outline-secondary:hover {
-    background-color: #6c757d;
+    background-color: #5a6268;
     color: #fff;
 }
 
 .btn-outline-success:hover {
-    background-color: #28a745;
+    background-color: #218838;
     color: #fff;
 }
 
 .btn-outline-warning:hover {
-    background-color: #ffc107;
+    background-color: #e0a800;
     color: #212529;
 }
 
-/* Pagination */
+/* Pagination Styling */
 .pagination .page-item.active .page-link {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: #ffb400;  /* Warmer yellow for active pagination */
+    border-color: #ffb400;
     color: #212529;
     font-weight: bold;
 }
@@ -94,7 +98,7 @@
 .pagination .page-link {
     color: #007bff;
     border-radius: 50px;
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 1rem;  /* Slightly reduced padding */
 }
 
 .pagination .page-link:hover {
@@ -105,7 +109,11 @@
 /* Responsive Styling */
 @media (max-width: 992px) {
     .card {
-        margin-bottom: 30px;
+        margin-bottom: 24px;  /* Slightly reduce margin for better balance */
+    }
+
+    .card-img-top {
+        height: 300px;  /* Adjust image height for medium screens */
     }
 }
 
@@ -116,6 +124,10 @@
 
     .card-text {
         font-size: 0.9rem;
+    }
+
+    .card-img-top {
+        height: 280px;  /* Adjust image height for smaller screens */
     }
 
     .btn-primary, .btn-secondary {
@@ -131,6 +143,10 @@
 
     .card-text {
         font-size: 0.85rem;
+    }
+
+    .card-img-top {
+        height: 240px;  /* Adjust image height for extra small screens */
     }
 
     .btn-primary, .btn-secondary {

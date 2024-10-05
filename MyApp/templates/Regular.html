@@ -16,11 +16,24 @@
         <div class="col-md-6">
             <h4>Sort by:</h4>
             <a href="?sort=price" class="btn btn-outline-primary">Price</a>
-            <a href="?sort=series" class="btn btn-outline-secondary">Set</a>
             <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
         </div>
+        <div class="col-md-6">
+            <h4>Filter by Series:</h4>
+            <form method="get" class="form-inline">
+                <div class="form-group">
+                    <label for="series-select" class="mr-2">Series:</label>
+                    <select id="series-select" name="series" class="form-control">
+                        <option value="">All Series</option>
+                        {% for series_name in all_series %}
+                        <option value="{{ series_name }}" {% if request.GET.series == series_name %}selected{% endif %}>{{ series_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-outline-secondary ml-2">Filter</button>
+            </form>
+        </div>
     </div>
-
     <!-- Card Display -->
     <div class="row">
         {% for card in cards %}

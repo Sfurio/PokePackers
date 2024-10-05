@@ -87,12 +87,20 @@ def home(request):
 
 
 def regular_cards(request):
-    sort_by = request.GET.get('sort', 'name')  # Default sorting by name
-    
-    # Validate sort_by to ensure it's a valid field
-    valid_sort_fields = ['name', 'price', 'set']
-    if sort_by not in valid_sort_fields:
-        sort_by = 'name'  # Default to 'name' if invalid sort field
+    sort_option = request.GET.get('sort')
+    series_filter = request.GET.get('series')
+
+    cards = Card.objects.filter(type='Regular', inventory__gt=0)
+
+    if series_filter:
+        cards = cards.filter(series=series_filter)
+
+    if sort_option == 'price':
+        cards = cards.order_by('price')
+    elif sort_option == 'series':
+        cards = cards.order_by('series')
+    elif sort_option == 'name':
+        cards = cards.order_by('name')
 
     # Filter cards where inventory is greater than 0
     cards = Card.objects.filter(type='Regular', inventory__gt=0).order_by(sort_by)
@@ -110,63 +118,92 @@ def regular_cards(request):
 
 def reverse_cards(request):
     sort_option = request.GET.get('sort')
-    
+    series_filter = request.GET.get('series')
+
+    # Base query for reverse cards with inventory greater than 0
+    cards = Card.objects.filter(type='Reverse', inventory__gt=0)
+
+    # Filter by series if selected
+    if series_filter:
+        cards = cards.filter(series=series_filter)
+
+    # Sorting
     if sort_option == 'price':
-        cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('price')
+        cards = cards.order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('series')
+        cards = cards.order_by('series')
     elif sort_option == 'name':
-        cards = Card.objects.filter(type='Reverse', inventory__gt=0).order_by('name')
-    else:
-        cards = Card.objects.filter(type='Reverse', inventory__gt=0)
+        cards = cards.order_by('name')
 
     # Pagination
     paginator = Paginator(cards, 10)  # Show 10 cards per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    # Get all distinct series to display in the dropdown
+    all_series = Card.objects.filter(type='Reverse').values_list('series', flat=True).distinct()
+
     return render(request, 'Reverse.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'all_series': all_series,  # Pass distinct series to template
+        'selected_series': series_filter  # Pass selected series to maintain state
     })
 
 
 def foil_cards(request):
     sort_option = request.GET.get('sort')
-    
-    if sort_option == 'price':
-        cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('price')
-    elif sort_option == 'series':
-        cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('series')
-    elif sort_option == 'name':
-        cards = Card.objects.filter(type='Foil', inventory__gt=0).order_by('name')
-    else:
-        cards = Card.objects.filter(type='Foil', inventory__gt=0)
+    series_filter = request.GET.get('series')
 
-    # Pagination
-    paginator = Paginator(cards, 10)  # Show 10 cards per page.
+    cards = Card.objects.filter(type='Foil', inventory__gt=0)
+
+    if series_filter:
+        cards = cards.filter(series=series_filter)
+
+    if sort_option == 'price':
+        cards = cards.order_by('price')
+    elif sort_option == 'series':
+        cards = cards.order_by('series')
+    elif sort_option == 'name':
+        cards = cards.order_by('name')
+
+    paginator = Paginator(cards, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    all_series = Card.objects.filter(type='Foil').values_list('series', flat=True).distinct()
 
     return render(request, 'Foil.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'all_series': all_series,
+        'selected_series': series_filter
     })
 
 
 def rare_cards(request):
     sort_option = request.GET.get('sort')
-    
+    series_filter = request.GET.get('series')
+
+    # Query to get the available series for filtering
+    series_list = Card.objects.filter(type='Rare', inventory__gt=0).values_list('series', flat=True).distinct()
+
+    # Base query to get rare cards in stock
+    cards = Card.objects.filter(type='Rare', inventory__gt=0)
+
+    # Apply series filter if selected
+    if series_filter:
+        cards = cards.filter(series=series_filter)
+
+    # Apply sorting based on the selected option
     if sort_option == 'price':
-        cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('price')
+        cards = cards.order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('series')
+        cards = cards.order_by('series')
     elif sort_option == 'name':
-        cards = Card.objects.filter(type='Rare', inventory__gt=0).order_by('name')
-    else:
-        cards = Card.objects.filter(type='Rare', inventory__gt=0)
+        cards = cards.order_by('name')
 
     # Pagination
     paginator = Paginator(cards, 10)  # Show 10 cards per page.
@@ -176,23 +213,41 @@ def rare_cards(request):
     return render(request, 'Rare.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'series_list': series_list,  # Pass the available series to the template
+        'selected_series': series_filter,  # Keep track of selected series
     })
 
 
 def PSA_Graded(request):
     sort_option = request.GET.get('sort')
-    
+    series_filter = request.GET.get('series')
+    grade_filter = request.GET.get('grade')
+
+    # Query to get the available series and grades for dropdown filters
+    series_list = Card.objects.filter(type='PSA', inventory__gt=0).values_list('series', flat=True).distinct()
+    grade_list = Card.objects.filter(type='PSA', inventory__gt=0).values_list('grade', flat=True).distinct()
+
+    # Filter cards by type 'PSA' and inventory
+    cards = Card.objects.filter(type='PSA', inventory__gt=0)
+
+    # Apply series filter if selected
+    if series_filter:
+        cards = cards.filter(series=series_filter)
+
+    # Apply grade filter if selected
+    if grade_filter:
+        cards = cards.filter(grade=grade_filter)
+
+    # Apply sorting based on the selected option
     if sort_option == 'price':
-        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('price')
+        cards = cards.order_by('price')
     elif sort_option == 'series':
-        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('series')
+        cards = cards.order_by('series')
     elif sort_option == 'name':
-        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('name')
+        cards = cards.order_by('name')
     elif sort_option == 'grade':
-        cards = Card.objects.filter(type='PSA', inventory__gt=0).order_by('grade')
-    else:
-        cards = Card.objects.filter(type='PSA', inventory__gt=0)
+        cards = cards.order_by('grade')
 
     # Pagination
     paginator = Paginator(cards, 10)  # Show 10 cards per page.
@@ -202,7 +257,11 @@ def PSA_Graded(request):
     return render(request, 'Psa.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'series_list': series_list,  # Pass the series list to the template
+        'grade_list': grade_list,    # Pass the grade list to the template
+        'selected_series': series_filter,  # Track the selected series
+        'selected_grade': grade_filter,    # Track the selected grade
     })
 
 

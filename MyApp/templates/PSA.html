@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}PSA Cards{% endblock %}
+{% block title %}PSA Graded Cards{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'psa.css' %}">
@@ -11,14 +11,42 @@
 <div id="psa-cards-page" class="container mt-5">
     <h1 class="text-center mb-4">PSA Graded Cards</h1>
 
-    <!-- Sorting Options -->
+    <!-- Sorting and Filtering Options -->
     <div class="row my-4">
+        <!-- Sorting Options -->
         <div class="col-md-6">
             <h4>Sort by:</h4>
-            <a href="?sort=price" class="btn btn-outline-primary">Price</a>
-            <a href="?sort=series" class="btn btn-outline-secondary">Set</a>
-            <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
-            <a href="?sort=grade" class="btn btn-outline-warning">Grade</a>
+            <a href="?sort=price&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-primary">Price</a>
+            <a href="?sort=name&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-success">Alphabetical</a>
+            <a href="?sort=grade&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-warning">Grade</a>
+        </div>
+
+        <!-- Filter by Series and Grade -->
+        <div class="col-md-6">
+            <h4>Filter by Series & Grade:</h4>
+            <form method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="series-select" class="mr-2">Series:</label>
+                    <select id="series-select" name="series" class="form-control">
+                        <option value="">All Series</option>
+                        {% for series_name in series_list %}
+                        <option value="{{ series_name }}" {% if request.GET.series == series_name %}selected{% endif %}>{{ series_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mr-2">
+                    <label for="grade-select" class="mr-2">Grade:</label>
+                    <select id="grade-select" name="grade" class="form-control">
+                        <option value="">All Grades</option>
+                        {% for grade in grade_list %}
+                        <option value="{{ grade }}" {% if request.GET.grade == grade %}selected{% endif %}>{{ grade }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-outline-secondary">Filter</button>
+            </form>
         </div>
     </div>
 
@@ -57,17 +85,17 @@
             <ul class="pagination">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ request.GET.sort }}">Previous</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ request.GET.sort }}&series={{ request.GET.series }}&grade={{ request.GET.grade }}">Previous</a>
                 </li>
                 {% endif %}
                 {% for num in page_obj.paginator.page_range %}
                 <li class="page-item{% if page_obj.number == num %} active{% endif %}">
-                    <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}">{{ num }}</a>
+                    <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}&series={{ request.GET.series }}&grade={{ request.GET.grade }}">{{ num }}</a>
                 </li>
                 {% endfor %}
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ request.GET.sort }}">Next</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ request.GET.sort }}&series={{ request.GET.series }}&grade={{ request.GET.grade }}">Next</a>
                 </li>
                 {% endif %}
             </ul>
