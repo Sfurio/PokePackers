@@ -19,8 +19,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'
+EMAIL_HOST_USER = 'pokepackerscontact@gmail.com'
+EMAIL_HOST_PASSWORD = 'efzy bliu jnvq sbqq'
+DEFAULT_FROM_EMAIL = 'pokepackerscontact@gmail.com'  # Ensure this is set correctly
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -31,11 +32,11 @@ SECRET_KEY = 'django-insecure-ivwdqf^2!u2#omdsjv^pi^+_s&j82er3c6(d-cs*741v+z!l9b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # settings.py
-STRIPE_SECRET_KEY = 'your_secret_key'
-STRIPE_PUBLISHABLE_KEY = 'your_publishable_key'
+STRIPE_SECRET_KEY = 'sk_test_51Q1yWY12jYzXx4CXSGwrIhNQ307GaUiTUqye3aJa8EEs0qZBLZeNARju7jElrZT37oZcLBVZOLu6zzIGUgdUS1Ts00oM2wbEzm'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51Q1yWY12jYzXx4CXmqitDQQMC8fJH5oZ4nGQCDzVeYl8UhVFaQ459Gjqmz2viAqYxStAReRVj6MIfNeHodjrzEIt00XoJOE88R'
 
 # Application definition
 
@@ -137,3 +138,4 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
+

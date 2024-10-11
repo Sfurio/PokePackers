@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'termstyle.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Terms and Conditions - PokePackers{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Terms and conditions for using PokePackers. Understand your rights and responsibilities.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Terms and Conditions</h1>
+    
+    <h2>1. Introduction</h2>
+    <p>Welcome to PokePackers! By using our website, you agree to comply with the following terms and conditions.</p>
+
+    <h2>2. Acceptance of Terms</h2>
+    <p>By accessing and using our services, you confirm that you accept these terms and that you agree to comply with them.</p>
+
+    <h2>3. Changes to Terms</h2>
+    <p>We may update our terms from time to time. Any changes will be posted on this page with an updated effective date.</p>
+
+    <h2>4. Product Listings</h2>
+    <p>All products are subject to availability. We reserve the right to modify or discontinue any product at any time.</p>
+
+    <h2>5. Orders and Payments</h2>
+    <p>All orders placed through our website are subject to acceptance. We accept various payment methods as indicated on our checkout page.</p>
+
+    <h2>6. Shipping and Delivery</h2>
+    <p>Delivery times may vary based on location and availability. We are not responsible for delays caused by shipping carriers.</p>
+
+    <h2>7. Returns and Refunds</h2>
+    <p>All Sales Are Final, If an error occurs please reach out via Email and we will try to help as much as possible.</p>
+
+    <h2>8. Limitation of Liability</h2>
+    <p>PokePackers shall not be liable for any indirect, incidental, or consequential damages arising from your use of our services.</p>
+
+    <h2>9. Governing Law</h2>
+    <p>These terms shall be governed by and construed in accordance with the laws of [Insert Jurisdiction].</p>
+
+    <h2>10. Contact Us</h2>
+    <p>If you have any questions about these Terms and Conditions, please contact us at support@pokepackers.com.</p>
+
+</div>
+{% endblock %}

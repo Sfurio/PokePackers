@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Reverse Foil Cards{% endblock %}
+{% block title %}Reverse Foil Cards - Shop the Best Pokémon Cards{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Discover our collection of Reverse Foil Pokémon cards. Sort by price or name and filter by series. Find your favorite cards today!">
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'psa.css' %}">
 {% endblock %}
 
 {% block content %}
-<div id="psa-cards-page" class="container mt-5">
-    <h1 class="text-center mb-4">Reverse Foil Cards</h1>
+<div id="reverse-foil-cards-page" class="container mt-5">
+    <h1 class="text-center mb-4">Reverse Foil Pokémon Cards</h1>
 
-     <!-- Sorting Options -->
-     <div class="row my-4">
-        <div class="col-md-6">
+    <!-- Sorting and Filtering Options -->
+    <div class="row my-4">
+        <div class="col-md-6 sorting-section">
             <h4>Sort by:</h4>
-            <a href="?sort=price" class="btn btn-outline-primary">Price</a>
-            <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
+            <a href="?sort=price&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-primary">Price</a>
+            <a href="?sort=name&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-success">Alphabetical</a>
         </div>
         <div class="col-md-6">
             <h4>Filter by Series:</h4>
@@ -34,6 +38,7 @@
             </form>
         </div>
     </div>
+
     <!-- Card Display -->
     <div class="row">
         {% for card in cards %}
@@ -42,7 +47,7 @@
                 <div class="card h-100 shadow-sm">
                     <!-- Display the first image of the card -->
                     {% if card.images.all %}
-                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }} - {{ card.series }}">
                     {% else %}
                     <img src="{% static 'default-card-image.jpg' %}" class="card-img-top" alt="Default Image">
                     {% endif %}

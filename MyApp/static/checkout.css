@@ -1,8 +1,4 @@
-/* General Styles */
-body {
-    background-color: #f8f9fa; /* Light background for contrast */
-    font-family: 'Arial', sans-serif; /* Clean and modern font */
-}
+
 
 .checkout-container {
     max-width: 800px; /* Constrain width for better readability */

@@ -4,86 +4,135 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}PokePackers{% endblock %}</title>
+        <title>{% block title %}PokePackers - Pokémon Cards Store{% endblock %}</title>
+
+        <!-- Meta Descriptions and Keywords for SEO -->
+        <meta name="description" content="Buy, sell, and trade Pokémon cards including rare, foil, reverse foil, and PSA-graded cards.">
+        <meta name="keywords" content="Pokémon cards, PSA-graded, Rare Pokémon, Foil Pokémon, Buy Pokémon Cards, Sell Pokémon Cards">
+        <meta name="robots" content="index, follow">
+        <meta property="og:title" content="PokePackers - Pokémon Cards Store">
+        <meta property="og:description" content="Shop and explore a wide selection of rare, PSA-graded, foil, and reverse foil Pokémon cards.">
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Custom Global CSS -->
         <link rel="stylesheet" href="{% static 'styles.css' %}">
-        <!-- Page-Specific CSS -->
-        <link rel="icon" href="{% static 'favicon3.png' %}" type="image/png"> <!-- Fixed: Change to .png -->
+        <!-- Font Awesome for Icons (Updated to latest CDN) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="icon" href="{% static 'favicon3.png' %}" type="image/png">
         {% block extra_css %}{% endblock %}
     </head>
-    
-<body>
-<header>
-    <nav id="basenav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'pokepackers.png' %}" alt="PokePackers Logo" height="40">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item{% if request.path == '/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/Regular/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'Regular' %}">Regular</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/Reverse/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'Reverse' %}">Reverse Foil</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/Foil/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'Foil' %}">Foil</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/Rare/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'Rare' %}">Rare</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/PSA/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'PSA' %}">PSA Graded</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/contact/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'contact' %}">Get In Touch</a>
-                    </li>
-                    <li class="nav-item{% if request.path == '/cart/' %} active{% endif %}">
-                        <a class="nav-link" href="{% url 'cart' %}">
-                            Cart
-                            {% if cart_item_count %}
-                            <span class="badge badge-light">{{ cart_item_count }}</span>
-                            {% endif %}
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
+    <body>
+        <header>
+            <nav id="basenav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'pokepackers.png' %}" alt="PokePackers Logo" height="40">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                        <ul class="navbar-nav ml-auto d-none d-lg-flex">
+                            <li class="nav-item{% if request.path == '/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Regular/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Regular' %}">Regular</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Reverse/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Reverse' %}">Reverse Foil</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Foil/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Foil' %}">Foil</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Rare/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Rare' %}">Rare</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/PSA/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'PSA' %}">PSA Graded</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/contact/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'contact' %}">Get In Touch</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/cart/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'cart' %}">
+                                    Cart
+                                    {% if cart_item_count %}
+                                    <span class="badge badge-light">{{ cart_item_count }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Mobile Menu: Shown only on smaller screens -->
+                        <ul class="navbar-nav ml-auto d-lg-none">
+                            <li class="nav-item{% if request.path == '/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Regular/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Regular' %}">Regular</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Reverse/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Reverse' %}">Reverse Foil</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Foil/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Foil' %}">Foil</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/Rare/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'Rare' %}">Rare</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/PSA/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'PSA' %}">PSA Graded</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/contact/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'contact' %}">Get In Touch</a>
+                            </li>
+                            <li class="nav-item{% if request.path == '/cart/' %} active{% endif %}">
+                                <a class="nav-link" href="{% url 'cart' %}">
+                                    Cart
+                                    {% if cart_item_count %}
+                                    <span class="badge badge-light">{{ cart_item_count }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Wrapper to ensure footer stays at the bottom -->
+        <div class="d-flex flex-column min-vh-100">
+            <main role="main" class="flex-fill mt-5 pt-4">
+                <div class="container py-5">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-dark text-light py-4 mt-auto">
+                <div class="container text-center">
+                    <h5>Stay Connected</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fas fa-envelope"></i> Email</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    </ul>
+                    <hr class="bg-light">
+                    <p class="text-muted mb-0">&copy; {% now "Y" %} PokePackers. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
-    </nav>
-</header>
 
-<main role="main" class="mt-5 pt-4">
-    <div class="container py-5">
-        {% block content %}
-        {% endblock %}
-    </div>
-</main>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <!-- jQuery (required for Bootstrap's JS features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS (includes Popper.js) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-<footer class="bg-dark text-light py-4">
-    <div class="container text-center">
-        <h5>Stay Connected</h5>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook"></i> Facebook</a></li>
-            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i> Email</a></li>
-            <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i> Instagram</a></li>
-        </ul>
-        <hr class="bg-light">
-        <p class="text-muted mb-0">&copy; {% now "Y" %} PokePackers. All rights reserved.</p>
-    </div>
-</footer>
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<!-- Font Awesome for Icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</body>
+    </body>
 </html>

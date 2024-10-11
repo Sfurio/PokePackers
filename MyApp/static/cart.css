@@ -1,5 +1,4 @@
-
-
+/* General Styles */
 h1 {
     font-weight: 600;
     font-size: 2.5rem;
@@ -14,6 +13,7 @@ h4 {
 .table {
     border-radius: 8px;
     overflow: hidden;
+    width: 100%;  /* Ensure table takes full width */
 }
 
 .table thead th {
@@ -21,6 +21,7 @@ h4 {
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-size: 0.9rem;  /* Slightly smaller font size for better fit */
 }
 
 .table tbody tr {
@@ -32,9 +33,9 @@ h4 {
 }
 
 .img-thumbnail {
-    width: 120px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;  /* Ensure images are responsive */
+    max-width: 120px;  /* Limit the max width for larger screens */
+    height: auto;  /* Maintain aspect ratio */
 }
 
 /* Form Styling */
@@ -90,14 +91,52 @@ h4 {
     background-image: linear-gradient(45deg, #218838, #1e7e34);
 }
 
-/* Responsive Adjustments */
+/* Styling for the empty cart logo */
+.empty-cart-logo {
+    max-width: 300px; /* Larger size */
+    margin: 20px auto; /* Center it vertically */
+    display: block; /* Make sure it's centered horizontally */
+}
+/* Ensure the container doesn't have overflow */
+.container {
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    padding: 0 15px; /* Add padding for better visibility */
+}
+
+/* Card styling */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Thumbnail styling */
+.img-thumbnail {
+    width: auto; /* Allow images to scale */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Input styling */
+.quantity-input {
+    width: 60px; /* Set a fixed width for input */
+}
+
 @media (max-width: 768px) {
-    .btn {
-        width: 100%;
-        margin-bottom: 10px;
+    .empty-cart-logo {
+        max-width: 200px; /* Adjust size for mobile */
     }
-    
-    .trust-signals {
-        text-align: center;
+
+    /* Additional styling adjustments for mobile */
+    .card-body {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .card-title, .card-text {
+        margin: 0; /* Remove default margin */
+    }
+
+    .btn {
+        width: 100%; /* Make buttons full width */
+        margin-top: 10px; /* Space between buttons */
     }
 }

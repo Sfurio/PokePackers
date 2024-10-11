@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Regular Cards{% endblock %}
+{% block title %}Buy Pokémon Regular Cards - Affordable Prices{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'psa.css' %}">
@@ -11,12 +11,12 @@
 <div id="psa-cards-page" class="container mt-5">
     <h1 class="text-center mb-4">Regular Cards</h1>
 
-    <!-- Sorting Options -->
+    <!-- Sorting and Filtering Options -->
     <div class="row my-4">
-        <div class="col-md-6">
+        <div class="col-md-6 sorting-section">
             <h4>Sort by:</h4>
-            <a href="?sort=price" class="btn btn-outline-primary">Price</a>
-            <a href="?sort=name" class="btn btn-outline-success">Alphabetical</a>
+            <a href="?sort=price&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-primary">Price</a>
+            <a href="?sort=name&series={{ request.GET.series }}&grade={{ request.GET.grade }}" class="btn btn-outline-success">Alphabetical</a>
         </div>
         <div class="col-md-6">
             <h4>Filter by Series:</h4>
@@ -34,6 +34,7 @@
             </form>
         </div>
     </div>
+    
     <!-- Card Display -->
     <div class="row">
         {% for card in cards %}
@@ -42,12 +43,12 @@
                 <div class="card h-100 shadow-sm">
                     <!-- Display the first image of the card -->
                     {% if card.images.all %}
-                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}">
+                    <img src="{{ card.images.first.image.url }}" class="card-img-top" alt="{{ card.name }}" loading="lazy">
                     {% else %}
-                    <img src="{% static 'default-card-image.jpg' %}" class="card-img-top" alt="Default Image">
+                    <img src="{% static 'default-card-image.jpg' %}" class="card-img-top" alt="Pokémon card placeholder image" loading="lazy">
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ card.name }}</h5>
+                        <h3 class="card-title">{{ card.name }}</h3>
                         <p class="card-text">Series: {{ card.series }}</p>
                         <p class="card-text">Price: ${{ card.price }}</p>
                         <p class="card-text">Grade: {{ card.grade }}</p>
@@ -59,6 +60,23 @@
                 </div>
             </a>
         </div>
+
+        <!-- JSON-LD Structured Data for SEO -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "{{ card.name }}",
+          "image": "{{ card.images.first.image.url }}",
+          "description": "{{ card.series }} Pokémon card",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "USD",
+            "price": "{{ card.price }}",
+            "availability": "http://schema.org/InStock"
+          }
+        }
+        </script>
         {% endfor %}
     </div>
 
@@ -87,4 +105,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Shop a variety of regular Pokémon cards with competitive pricing. Sort by price, series, and more. Find your perfect card today!">
 {% endblock %}

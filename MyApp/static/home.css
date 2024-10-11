@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -5,52 +6,34 @@
 }
 
 html, body {
-    height: 100%; /* Ensure that the body fills the entire height of the viewport */
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
-
-
 
 .hero-section {
-    width: 100vw; /* Set width to 100% of the viewport width */
-    position: relative; /* Position relative for absolute positioning of content */
-    left: 50%; /* Move it to the center */
-    right: 50%; /* Move it to the center */
-    margin-left: -50vw; /* Pull it back by half the viewport width */
-    margin-right: -50vw; /* Pull it back by half the viewport width */
-    height: 400px; /* Fixed height for the hero section */
-    background-size: cover; /* Ensure the image covers the entire section */
-    background-position: center center; /* Keep the image centered */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Hero content styling */
 .hero-content {
-    position: absolute; /* Position the content in the center */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the content's own width and height */
-    background-color: rgba(56, 56, 56, 0.5); /* Light grey background with some transparency */
-    padding: 0px; /* Add some padding */
-    border-radius: 8px; /* Rounded corners */
-    color: white; /* Text color */
-    text-align: center; /* Center text */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(56, 56, 56, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
 }
-
-/* About Section */
-.about-logo {
-    max-width: 100%; /* Ensure the logo is responsive */
-    height: auto;
-    margin-bottom: 20px; /* Optional margin below the image on small screens */
-}
-
-@media (max-width: 768px) {
-    .about-logo {
-        max-width: 70%; /* Reduce logo size on smaller screens */
-        margin: 0 auto 20px; /* Center logo on smaller screens */
-    }
-}
-
 
 /* About Section */
 .about-section {
@@ -120,19 +103,18 @@ html, body {
 }
 
 /* CTA Section */
-/* Ensure the section takes up the full width */
 .cta-section {
-    width: 100vw; /* Full viewport width */
+    width: 100vw;
     background-color: white;
-    padding: 60px 0; /* Top and bottom padding */
-    margin-left: calc(-50vw + 50%); /* Aligns section to full width */
-    color:black;
+    padding: 60px 0;
+    margin-left: calc(-50vw + 50%);
+    color: black;
 }
 
 .cta-content {
-    max-width: 1200px; /* Optional: limit text width for readability */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* Padding on the sides for smaller screens */
+    padding: 0 20px;
     text-align: center;
 }
 
@@ -151,6 +133,36 @@ html, body {
     font-size: 1.2rem;
 }
 
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .about-section h2 {
+        font-size: 2rem;
+    }
+
+    .about-section p {
+        font-size: 1rem;
+    }
+
+    .products-section h2 {
+        font-size: 2rem;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+
+    .cta-section p {
+        font-size: 1rem;
+    }
+}
 
 /* Footer Styles */
 footer {

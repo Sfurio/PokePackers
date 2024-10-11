@@ -16,47 +16,52 @@
 .card-img-top {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    height: 320px;  /* Slightly reduce height for a more compact design */
+    height: 320px;  
     width: 100%;
     object-fit: cover;
-    background-color: #f0f2f5; /* Softer fallback color */
+    background-color: #f0f2f5; 
 }
 
 /* Card title and text styling */
 .card-title {
     font-size: 1.25rem;
-    font-weight: 600;  /* Slightly reduced weight for a cleaner look */
+    font-weight: 600;  
     color: #212529;
-    margin-bottom: 0.5rem;  /* Reduced margin for better spacing */
+    margin-bottom: 0.5rem;  
 }
 
 .card-text {
     font-size: 0.95rem;
     color: #6c757d;
-    margin-bottom: 0.5rem;  /* Add margin for better spacing */
+    margin-bottom: 0.5rem;  
 }
 
 /* Card footer adjustments */
 .card-footer {
     background-color: transparent;
     border-top: none;
-    padding-top: 0.75rem;  /* Add padding for spacing between body and footer */
+    padding-top: 0.75rem;  
 }
+/* Add this to your existing CSS file */
+.sorting-section {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+
 
 /* Button Styling */
 .btn-primary, .btn-secondary {
     transition: background-color 0.25s ease;
     border-radius: 50px;
-    padding: 0.45rem 1.15rem;  /* Adjusted padding for consistency */
+    padding: 0.45rem 1.15rem;
     font-size: 0.9rem;
 }
 
 .btn-primary:hover {
-    background-color: #d69500;  /* Slightly softer hover color */
+    background-color: #d69500;
 }
 
 .btn-secondary:hover {
-    background-color: #495057;  /* Darker hover for better contrast */
+    background-color: #495057;
 }
 
 /* Sorting Buttons */
@@ -89,7 +94,7 @@
 
 /* Pagination Styling */
 .pagination .page-item.active .page-link {
-    background-color: #ffb400;  /* Warmer yellow for active pagination */
+    background-color: #ffb400;
     border-color: #ffb400;
     color: #212529;
     font-weight: bold;
@@ -98,7 +103,7 @@
 .pagination .page-link {
     color: #007bff;
     border-radius: 50px;
-    padding: 0.45rem 1rem;  /* Slightly reduced padding */
+    padding: 0.45rem 1rem;
 }
 
 .pagination .page-link:hover {
@@ -109,12 +114,20 @@
 /* Responsive Styling */
 @media (max-width: 992px) {
     .card {
-        margin-bottom: 24px;  /* Slightly reduce margin for better balance */
+        margin-bottom: 24px;
     }
 
+    /* Ensuring the image fits uniformly */
     .card-img-top {
-        height: 300px;  /* Adjust image height for medium screens */
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        width: 100%;  /* Ensure it takes full width */
+        height: auto;  /* Allow height to adjust automatically */
+        max-height: 200px;  /* Set a maximum height to prevent overly large images */
+        object-fit: contain;  /* Fit the image within its container without cropping */
+        background-color: #f0f2f5; 
     }
+
 }
 
 @media (max-width: 768px) {
@@ -126,10 +139,6 @@
         font-size: 0.9rem;
     }
 
-    .card-img-top {
-        height: 280px;  /* Adjust image height for smaller screens */
-    }
-
     .btn-primary, .btn-secondary {
         padding: 0.4rem 1rem;
         font-size: 0.85rem;
@@ -137,6 +146,10 @@
 }
 
 @media (max-width: 576px) {
+    .card-body {
+        text-align: center;
+    }
+
     .card-title {
         font-size: 1rem;
     }
@@ -145,17 +158,13 @@
         font-size: 0.85rem;
     }
 
-    .card-img-top {
-        height: 240px;  /* Adjust image height for extra small screens */
-    }
-
     .btn-primary, .btn-secondary {
         padding: 0.35rem 0.9rem;
         font-size: 0.8rem;
     }
 
     .btn-outline-primary, .btn-outline-secondary, .btn-outline-success, .btn-outline-warning {
-        padding: 0.4rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.35rem 0.9rem;
+        font-size: 0.85rem;
     }
 }

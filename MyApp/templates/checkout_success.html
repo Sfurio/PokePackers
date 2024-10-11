@@ -10,15 +10,6 @@
     <h1>Thank You for Your Purchase!</h1>
     <p>Your order has been successfully placed. A confirmation email has been sent to your inbox.</p>
     
-    <div class="order-summary">
-        <h2>Order Summary</h2>
-        <ul>
-            {% for item in order_items %}
-            <li>{{ item.product.name }} x{{ item.quantity }} - ${{ item.product.price * item.quantity }}</li>
-            {% endfor %}
-        </ul>
-        <p><strong>Total: ${{ total }}</strong></p>
-    </div>
     
     <a href="{% url 'home' %}" class="btn">Continue Shopping</a>
 </div>

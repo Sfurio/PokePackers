@@ -11,7 +11,7 @@
     <h1 class="text-center mb-4">Secure Checkout</h1>
 
     <div class="row">
-        <!-- Shippuguing & Payment Form Section -->
+        <!-- Shipping & Payment Form Section -->
         <div class="col-md-6 checkout-section">
             <form id="payment-form" method="POST">
                 {% csrf_token %}
@@ -21,27 +21,27 @@
                     <h2>Shipping Details</h2>
                     <div class="form-group">
                         <label for="full_name">Full Name</label>
-                        <input type="text" id="full_name" name="full_name" class="form-control" required>
+                        <input type="text" id="full_name" name="full_name" class="form-control" required placeholder="John Doe">
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" id="address" name="address" class="form-control" required>
+                        <input type="text" id="address" name="address" class="form-control" required placeholder="123 Main St">
                     </div>
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text" id="city" name="city" class="form-control" required>
+                        <input type="text" id="city" name="city" class="form-control" required placeholder="Anytown">
                     </div>
                     <div class="form-group">
                         <label for="state">State</label>
-                        <input type="text" id="state" name="state" class="form-control" required>
+                        <input type="text" id="state" name="state" class="form-control" required placeholder="CA">
                     </div>
                     <div class="form-group">
                         <label for="zip_code">ZIP Code</label>
-                        <input type="text" id="zip_code" name="zip_code" class="form-control" required>
+                        <input type="text" id="zip_code" name="zip_code" class="form-control" required placeholder="12345">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control" required placeholder="example@example.com">
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
             <!-- Security Notice -->
             <div class="security-notice mt-4">
                 <i class="fas fa-lock"></i>
-                <span>Your information is encrypted and secure.</span>
+                <small>Your information is encrypted and secure.</small>
             </div>
         </div>
 
@@ -91,12 +91,11 @@
                 {% endfor %}
             </ul>
             <p class="total-price"><strong>Total:</strong> ${{ total|floatformat:2 }}</p>
-            <p class="text-muted small">By completing your purchase, you agree to our <a href="#" class="text-primary">Terms and Conditions</a>.</p>
+            <p class="text-muted small">By completing your purchase, you agree to our <a href={% url 'terms' %} class="text-primary">Terms and Conditions</a>.</p>
 
             <!-- Badge Section -->
             <div class="badges text-center mt-4">
                 <img src="{% static 'badges.png' %}" alt="Badge 1" class="badge-img">
-
             </div>
 
             <div class="text-center mt-5">
@@ -126,11 +125,16 @@
     var form = document.getElementById('payment-form');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
+        
+        // Disable the button to prevent multiple submissions
+        document.getElementById('submit-button').disabled = true;
 
         stripe.createToken(card).then(function(result) {
             if (result.error) {
                 var errorElement = document.getElementById('card-errors');
                 errorElement.textContent = result.error.message;
+                // Re-enable the button if there was an error
+                document.getElementById('submit-button').disabled = false;
             } else {
                 stripeTokenHandler(result.token);
             }
@@ -144,6 +148,7 @@
         hiddenInput.setAttribute('name', 'stripeToken');
         hiddenInput.setAttribute('value', token.id);
         form.appendChild(hiddenInput);
+        
         form.submit();
     }
 </script>

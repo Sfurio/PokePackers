@@ -7,83 +7,136 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 import stripe
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+
+# Set your secret key. Remember to switch to your live secret key in production!
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def create_checkout_session(request):
-    if request.method == 'POST':
-        # Get cart details
+import logging
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import redirect, render
+import stripe
+from django.conf import settings
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+def checkout_view(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    if request.method == "POST":
         cart = request.session.get('cart', {})
-        total = sum(item['product'].price * item['quantity'] for item in cart.values())
+        total = sum(item['price'] * item['quantity'] for item in cart.values())
 
-        # Create a Stripe Checkout session
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[{
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {
-                        'name': 'PokePackers Order',
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': 'PokePackers Order',
+                        },
+                        'unit_amount': int(total * 100),  # Convert dollars to cents
                     },
-                    'unit_amount': int(total * 100),  # Convert dollars to cents
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url=request.build_absolute_uri('/checkout_success/'),
-            cancel_url=request.build_absolute_uri('/checkout/'),
-        )
+                    'quantity': 1,
+                }],
+                mode='payment',
+                success_url=request.build_absolute_uri('/checkout/success/?session_id={CHECKOUT_SESSION_ID}'),
+                cancel_url=request.build_absolute_uri('/checkout/'),
+                customer_email=request.POST.get('email', 'support@pokepackers.com'),  # Default email if not provided
+                metadata={
+                    'full_name': request.POST.get('full_name', 'Customer'),  # Default name if not provided
+                    'address': request.POST.get('address', 'N/A'),  # Default address if not provided
+                }
+            )
 
-        return JsonResponse({'id': session.id})
+            return redirect(session.url)
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+        except Exception as e:
+            messages.error(request, f"Error creating checkout session: {str(e)}")
+            return redirect('checkout')
+
+    # Handle GET request with session_id
+    session_id = request.GET.get('session_id')
+    if session_id:
+        try:
+            session = stripe.checkout.Session.retrieve(session_id)
+
+            if session.payment_status == 'paid':
+                order = Order.objects.create(
+                    full_name=session.metadata.full_name,
+                    address=session.metadata.address,
+                    email=session.customer_email,
+                    total_price=session.amount_total / 100,  # Convert cents to dollars
+                )
+
+                cart = request.session.get('cart', {})
+                order_items_details = []  # Store order details for the email receipt
+                for product_id, item in cart.items():
+                    product = Card.objects.get(id=product_id)
+                    OrderItem.objects.create(order=order, product=product, quantity=item['quantity'])
+                    order_items_details.append(f"{product.name} x{item['quantity']} - ${item['price'] * item['quantity']:.2f}")
+
+                # Clear the cart
+                request.session['cart'] = {}
+
+                # Send confirmation email
+                try:
+                    logger.info(f"Preparing to send confirmation email to {order.email}")
+                    # Use a default email if no address is found
+                    recipient_email = order.email or 'support@pokepackers.com'
+                    
+                    items_overview = "\n".join(order_items_details)
+                    email_message = (
+                        f"Thank you for your order, {order.full_name}!\n\n"
+                        f"Your order details:\n{items_overview}\n\n"
+                        f"Total: ${order.total_price:.2f}\n\n"
+                        "We appreciate your business!\n"
+                        "Best regards,\n"
+                        "PokePackers Team"
+                    )
+                    send_mail(
+                        subject='Order Confirmation - PokePackers',
+                        message=email_message,
+                        from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[recipient_email],
+                        fail_silently=False,
+                    )
+                    logger.info("Email sent successfully.")
+                except Exception as email_error:
+                    logger.error(f"Failed to send email: {str(email_error)}")
+                    messages.error(request, "Failed to send confirmation email.")
+
+                # Redirect to success page after payment
+                return redirect('checkout_success')  # Ensure this URL pattern exists
+
+            else:
+                messages.error(request, "Payment was not successful.")
+                return redirect('checkout')
+
+        except Exception as e:
+            messages.error(request, f"Error retrieving checkout session: {str(e)}")
+            return redirect('checkout')
+
+    # GET request - render checkout page
+    cart = request.session.get('cart', {})
+    total = sum(item['price'] * item['quantity'] for item in cart.values())
+    return render(request, 'checkout.html', {'cart': cart, 'total': total})
 
 def checkout_success_view(request):
     return render(request, 'checkout_success.html')
 
-
-def checkout_view(request):
-    if request.method == "POST":
-        # Extract cart and form data
-        cart = request.session.get('cart', {})
-        total = sum(item['product'].price * item['quantity'] for item in cart.values())
-
-        # Create Order object
-        order = Order.objects.create(
-            full_name=request.POST['full_name'],
-            address=request.POST['address'],
-            email=request.POST['email'],
-            total_price=total
-        )
-
-        # Create OrderItem objects
-        for product_id, quantity in cart.items():
-            product = Card.objects.get(id=product_id)
-            OrderItem.objects.create(order=order, product=product, quantity=quantity)
-
-        # Clear the cart
-        request.session['cart'] = {}
-
-        # Send confirmation email
-        send_mail(
-            subject='Order Confirmation - PokePackers',
-            message=f"Thank you for your order, {order.full_name}!\nYour total is ${order.total_price}.",
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[order.email],
-            fail_silently=False,
-        )
-
-        # Redirect to success page
-        return redirect('checkout_success', order_id=order.id)
-
-    # Example: Get cart from session
-    cart = request.session.get('cart', {})
-    total = sum(item['product'].price * item['quantity'] for item in cart.values())
-
-    return render(request, 'checkout.html', {'cart': cart, 'total': total})
 def home(request):
     images = ['sampic.JPG', 'marisite.JPG', 'WebExCode.JPG']
     return render(request, 'home.html', {'images': images})
+
+def terms(request):
+    return render(request, 'terms.html')
 
 
 def regular_cards(request):
@@ -102,12 +155,11 @@ def regular_cards(request):
     elif sort_option == 'name':
         cards = cards.order_by('name')
 
-    # Filter cards where inventory is greater than 0
-    cards = Card.objects.filter(type='Regular', inventory__gt=0).order_by(sort_by)
-
-    paginator = Paginator(cards, 24)  # Show 24 cards per page
+    paginator = Paginator(cards, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    all_series = Card.objects.filter(type='Regular').values_list('series', flat=True).distinct()
 
     return render(request, 'regular.html', {
         'cards': page_obj,
