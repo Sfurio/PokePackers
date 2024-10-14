@@ -366,7 +366,7 @@ def cart(request):
     for item in cart_items:
         item.total_price = item.card.price * item.quantity
     
-    return render(request, 'cart.html', {'cart_items': cart_items, 'cart_total': cart_total})
+    return render(request, 'Cart.html', {'cart_items': cart_items, 'cart_total': cart_total})
 
 
 def card_detail(request, card_id):
