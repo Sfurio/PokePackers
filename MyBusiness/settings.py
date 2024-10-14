@@ -30,9 +30,9 @@ DEFAULT_FROM_EMAIL = 'pokepackerscontact@gmail.com'  # Ensure this is set correc
 SECRET_KEY = 'django-insecure-ivwdqf^2!u2#omdsjv^pi^+_s&j82er3c6(d-cs*741v+z!l9b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pokepackers.com', '172.31.37.74','www.pokepackers.com']
 
 # settings.py
 STRIPE_SECRET_KEY = 'sk_test_51Q1yWY12jYzXx4CXSGwrIhNQ307GaUiTUqye3aJa8EEs0qZBLZeNARju7jElrZT37oZcLBVZOLu6zzIGUgdUS1Ts00oM2wbEzm'
