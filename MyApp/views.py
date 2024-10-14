@@ -160,7 +160,7 @@ def regular_cards(request):
 
     all_series = Card.objects.filter(type='Regular').values_list('series', flat=True).distinct()
 
-    return render(request, 'regular.html', {
+    return render(request, 'Regular.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
         'page_obj': page_obj
@@ -305,7 +305,7 @@ def PSA_Graded(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'Psa.html', {
+    return render(request, 'PSA.html', {
         'cards': page_obj,
         'is_paginated': page_obj.has_other_pages(),
         'page_obj': page_obj,
