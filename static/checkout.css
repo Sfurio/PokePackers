@@ -1,0 +1,187 @@
+
+
+.checkout-container {
+    max-width: 800px; /* Constrain width for better readability */
+    margin: 30px auto; /* Center the container */
+    padding: 20px;
+    background-color: #ffffff; /* White background for the checkout area */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-radius: 10px; /* Rounded corners for a modern look */
+}
+
+h1 {
+    font-size: 2.5rem; /* Large header */
+    color: #343a40; /* Dark color for contrast */
+    margin-bottom: 20px; /* Space below header */
+}
+
+h2 {
+    font-size: 1.75rem; /* Slightly smaller for subheaders */
+    color: #495057; /* Grayish color for headers */
+    margin-bottom: 15px; /* Space below headers */
+}
+.checkout-summary {
+    padding: 20px; /* Padding around the summary section */
+    border: 1px solid #e9ecef; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fdfdfe; /* Light background */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.list-group {
+    margin: 0; /* Remove default margin */
+}
+
+.list-group-item {
+    padding: 10px 15px; /* Add padding for list items */
+    border: none; /* Remove default borders for a cleaner look */
+}
+
+.total-price {
+    font-size: 1.5rem; /* Increase size for total price */
+    font-weight: bold; /* Bold for emphasis */
+    margin-top: 10px; /* Space above the total price */
+}
+
+.text-muted {
+    font-size: 0.875rem; /* Smaller font for muted text */
+    margin-top: 10px; /* Space above muted text */
+}
+
+
+.row {
+    display: flex; /* Flexbox for layout */
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+.checkout-section, .checkout-summary {
+    padding: 20px; /* Padding inside sections */
+    border: 1px solid #e9ecef; /* Light border for separation */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fdfdfe; /* Light background for sections */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for sections */
+}
+
+.form-group label {
+    font-weight: bold; /* Bold labels */
+    color: #495057; /* Darker color for readability */
+}
+
+.form-control {
+    border: 1px solid #ced4da; /* Standard border */
+    border-radius: 4px; /* Rounded corners */
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Shadow effect on focus */
+}
+
+.checkout-button {
+    margin-top: 20px; /* Space above button */
+}
+
+.btn {
+    padding: 15px; /* Padding for button */
+    font-size: 1.25rem; /* Larger font for button */
+    border-radius: 5px; /* Rounded button corners */
+}
+
+.total-price {
+    font-size: 1.5rem; /* Larger font for total price */
+    font-weight: bold; /* Bold text */
+    color: #343a40; /* Dark color for visibility */
+}
+
+.messages {
+    list-style: none; /* Remove list style */
+    padding: 0; /* No padding */
+}
+
+.messages li {
+    margin-top: 10px; /* Space between messages */
+}
+
+.text-muted {
+    font-size: 0.875rem; /* Smaller font for muted text */
+}
+
+.text-primary {
+    color: #007bff; /* Blue color for links */
+}
+
+.security-notice {
+    background-color: #e9ecef; /* Light gray background for security notice */
+    border: 1px solid #ced4da; /* Border for emphasis */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside the notice */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center content vertically */
+}
+
+.security-notice i {
+    margin-right: 20px; /* Space between icon and text */
+    color: #007bff; /* Color to match theme */
+}
+
+.badge-section {
+    margin-top: 20px; /* Space above badges */
+    display: flex; /* Flexbox for layout */
+    justify-content: center; /* Center badges */
+    gap: 20px; /* Space between badges */
+}
+
+.badge {
+    max-width: 80px; /* Maximum width for badges */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.logo-section {
+    display: flex; /* Flexbox for logo section */
+    justify-content: center; /* Center logo */
+    margin-bottom: 20px; /* Space below logo */
+}
+
+.logo-img {
+    max-width: 200px; /* Constrain logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.badges {
+    display: flex;                      /* Use flexbox for alignment */
+    justify-content: center;            /* Center the badges */
+    flex-wrap: wrap;                   /* Allow wrapping for smaller screens */
+    margin-top: 20px;                  /* Space above badges */
+}
+
+.badge-img {
+    height: 115px;                       /* Set a fixed height for badges */
+    margin: 0 10px;                    /* Add spacing between badges */
+    transition: transform 0.3s;        /* Smooth scaling transition on hover */
+}
+
+.badge-img:hover {
+    transform: scale(1.1);             /* Scale up on hover */
+}
+
+.badge-img:focus {
+    outline: none;                     /* Remove default outline on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle shadow on focus */
+}
+
+
+/* Additional Responsive Styles */
+@media (max-width: 768px) {
+    .checkout-container {
+        padding: 15px; /* Adjust padding on smaller screens */
+    }
+
+    h1 {
+        font-size: 2rem; /* Smaller font for header */
+    }
+
+    h2 {
+        font-size: 1.5rem; /* Smaller font for subheaders */
+    }
+}

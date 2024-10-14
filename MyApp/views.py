@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from .models import Card, Cart, Order, OrderItem
 from django.contrib import messages
 
+from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
 
@@ -25,7 +26,7 @@ from django.conf import settings
 # Set up logging
 logger = logging.getLogger(__name__)
 
-def checkout_view(request):
+def checkout_views(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
     if request.method == "POST":
@@ -128,8 +129,6 @@ def checkout_view(request):
     total = sum(item['price'] * item['quantity'] for item in cart.values())
     return render(request, 'checkout.html', {'cart': cart, 'total': total})
 
-def checkout_success_view(request):
-    return render(request, 'checkout_success.html')
 
 def home(request):
     images = ['sampic.JPG', 'marisite.JPG', 'WebExCode.JPG']
@@ -427,6 +426,7 @@ def checkout(request):
     cart_items.delete()
 
     return render(request, 'checkout.html')
+
 def checkout_view(request):
     # Ensure session exists
     session_id = request.session.session_key
@@ -436,7 +436,7 @@ def checkout_view(request):
 
     # Get cart items for the current session
     cart_items = Cart.objects.filter(session_id=session_id)
-    
+
     if not cart_items.exists():
         messages.error(request, "Your cart is empty.")
         return redirect('cart')
@@ -494,6 +494,25 @@ def checkout_view(request):
             # Clear the cart after successful purchase
             cart_items.delete()
 
+            # Store the order ID in the session for retrieval on success page
+            request.session['order_id'] = order.id
+
+            # Send the order receipt email
+            order_items = OrderItem.objects.filter(order=order)
+            email_subject = 'Your PokePackers Order Receipt'
+            email_body = render_to_string('order_receipt.html', {
+                'order': order,
+                'order_items': order_items,
+            })
+            send_mail(
+                email_subject,
+                email_body,
+                settings.EMAIL_HOST_USER,  # From email
+                [email],  # To email
+                fail_silently=False,
+                html_message=email_body,  # Send as HTML
+            )
+
             # Redirect to success page
             return redirect('checkout_success')
 
@@ -502,6 +521,8 @@ def checkout_view(request):
         except stripe.error.StripeError as e:
             messages.error(request, "There was an error processing your payment. Please try again.")
         except Exception as e:
+            # Log the error for debugging
+            print(f"Unexpected error: {str(e)}")
             messages.error(request, "An unexpected error occurred. Please try again.")
 
     # Render the checkout page with cart items and total
@@ -510,3 +531,25 @@ def checkout_view(request):
         'total': total,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY  # Pass Stripe publishable key
     })
+
+def checkout_success_view(request):
+    # Retrieve the order ID from the session
+    order_id = request.session.get('order_id')
+    order_summary = None
+
+    if order_id:
+        try:
+            # Fetch the order and associated order items
+            order_summary = Order.objects.get(id=order_id)
+            order_items = OrderItem.objects.filter(order=order_summary)
+            # Optionally, clear the order ID from the session after retrieval
+            del request.session['order_id']
+        except Order.DoesNotExist:
+            messages.error(request, "Order not found.")
+            return redirect('cart')  # Redirect if the order doesn't exist
+
+    return render(request, 'checkout_success.html', {
+        'order_summary': order_summary,
+        'order_items': order_items
+    })
+

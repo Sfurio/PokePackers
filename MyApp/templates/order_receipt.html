@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body>
+<!-- templates/order_receipt.html -->
+<h1>Order Receipt</h1>
+<p>Thank you for your purchase, {{ order.full_name }}!</p>
+<p>A confirmation of your order is included below:</p>
+
+<h3>Order Summary:</h3>
+<ul>
+    {% for item in order_items %}
+        <li>{{ item.product.name }} x{{ item.quantity }} - ${{ item.product.price|floatformat:2 }}</li>
+    {% endfor %}
+</ul>
+
+<h4>Total: ${{ order.total_price|floatformat:2 }}</h4>
+
+<p>Shipping Address: {{ order.address }}</p>
+<p>If you have any questions, please contact us at support@example.com.</p>
+
+</body>
+</html>
