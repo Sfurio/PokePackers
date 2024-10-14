@@ -65,7 +65,7 @@ ROOT_URLCONF = 'MyBusiness.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Make sure this points to your template directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
