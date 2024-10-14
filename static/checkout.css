@@ -124,6 +124,14 @@ h2 {
     margin-right: 20px; /* Space between icon and text */
     color: #007bff; /* Color to match theme */
 }
+.security-notice i {
+    margin-right: 10px; /* Increased space between icon and text */
+    color: #007bff; /* Color to match theme */
+}
+
+.security-notice small {
+    padding-left: 5px; /* Optional: add padding to the text */
+}
 
 .badge-section {
     margin-top: 20px; /* Space above badges */

@@ -135,14 +135,26 @@ html, body {
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+    .hero-section {
+        height: 275px; /* Height for mobile */
+        background-size: cover; /* Keep cover for a better fit */
+    }
+    .about-logo {
+        max-width: 60%; /* Adjust to desired percentage for mobile */
+        /* Optionally, you can set a specific height */
+        /* height: 100px; */ /* Uncomment and adjust if needed */
+    }
+    .hero-content {
+        padding: 10px; /* Reduced padding for mobile */
+    }
+
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: 1.5rem; /* Adjust font size for mobile */
     }
 
     .hero-content p {
-        font-size: 1rem;
+        font-size: 0.9rem; /* Adjust font size for mobile */
     }
-
     .about-section h2 {
         font-size: 2rem;
     }
