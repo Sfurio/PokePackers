@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
-
+from django.urls import reverse
 class Card(models.Model):
     TYPE_CHOICES = [
         ('Regular', 'Regular'),
@@ -155,6 +155,10 @@ class Card(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('card_detail', kwargs={'card_id': self.id})
+
 
 class CardImage(models.Model):
     card = models.ForeignKey(Card, related_name='images', on_delete=models.CASCADE)
