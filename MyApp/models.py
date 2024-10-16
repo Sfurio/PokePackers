@@ -150,6 +150,7 @@ class Card(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     grade = models.CharField(max_length=20, choices=GRADE_CHOICES)
     inventory = models.PositiveIntegerField(default=0)  # New field to track inventory
+    updated_at = models.DateTimeField(auto_now=True)
 
     
     def __str__(self):

@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /Cart/
+Disallow: /checkout/success/
+Disallow: /order_receipt/
+Disallow: /add_to_cart/
+Allow: /
+
+Sitemap: https://www.pokepackers.com/sitemap.xml

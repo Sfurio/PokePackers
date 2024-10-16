@@ -20,6 +20,15 @@ from MyApp import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib.sitemaps.views import sitemap
+from MyApp.sitemaps import StaticViewSitemap, CardSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'cards': CardSitemap,
+}
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
