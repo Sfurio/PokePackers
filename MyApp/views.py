@@ -556,15 +556,15 @@ def checkout_success_view(request):
 from django.http import HttpResponse
 
 def robots_txt(request):
-    lines = [
-        "User-agent: *",
-        "Disallow: /admin/",
-        "Disallow: /checkout/",
-        "Disallow: /Cart/",
-        "Disallow: /checkout/success/",
-        "Disallow: /order_receipt/",
-        "Disallow: /add_to_cart/",
-        "Allow: /",
+    return HttpResponse(
+        "User-agent: *\n"
+        "Disallow: /admin/\n"
+        "Disallow: /checkout/\n"
+        "Disallow: /cart/\n"
+        "Disallow: /checkout/success/\n"
+        "Disallow: /order_receipt/\n"
+        "Disallow: /add_to_cart/\n"
+        "Allow: /\n\n"
         "Sitemap: https://www.pokepackers.com/sitemap.xml",
-    ]
-    return HttpResponse("\n".join(lines), content_type="text/plain")
+        content_type="text/plain"
+    )
