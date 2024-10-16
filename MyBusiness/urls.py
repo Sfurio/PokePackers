@@ -48,6 +48,7 @@ urlpatterns = [
     path('card/<int:card_id>/', views.card_detail, name='card_detail'),
     path('checkout/', views.checkout_view, name='checkout'),
     path('checkout/success/', views.checkout_success_view, name='checkout_success'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
 
 ]
 

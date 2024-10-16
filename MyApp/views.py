@@ -553,3 +553,18 @@ def checkout_success_view(request):
         'order_items': order_items
     })
 
+from django.http import HttpResponse
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "Disallow: /checkout/",
+        "Disallow: /Cart/",
+        "Disallow: /checkout/success/",
+        "Disallow: /order_receipt/",
+        "Disallow: /add_to_cart/",
+        "Allow: /",
+        "Sitemap: https://www.pokepackers.com/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
