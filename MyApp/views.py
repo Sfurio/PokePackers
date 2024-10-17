@@ -428,6 +428,7 @@ def checkout(request):
     return render(request, 'checkout.html')
 
 def checkout_view(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     # Ensure session exists
     session_id = request.session.session_key
     if not session_id:
