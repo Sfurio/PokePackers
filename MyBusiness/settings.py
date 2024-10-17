@@ -30,15 +30,16 @@ DEFAULT_FROM_EMAIL = 'pokepackerscontact@gmail.com'  # Ensure this is set correc
 SECRET_KEY = 'django-insecure-ivwdqf^2!u2#omdsjv^pi^+_s&j82er3c6(d-cs*741v+z!l9b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pokepackers.com', '34.238.161.6','www.pokepackers.com']
 
 # settings.py
 import os
 
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
-STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+
 # Application definition 
 
 INSTALLED_APPS = [
