@@ -35,10 +35,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pokepackers.com', '34.238.161.6','www.pokepackers.com']
 
 # settings.py
-STRIPE_SECRET_KEY = 'sk_test_51Q1yWY12jYzXx4CXSGwrIhNQ307GaUiTUqye3aJa8EEs0qZBLZeNARju7jElrZT37oZcLBVZOLu6zzIGUgdUS1Ts00oM2wbEzm'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51Q1yWY12jYzXx4CXmqitDQQMC8fJH5oZ4nGQCDzVeYl8UhVFaQ459Gjqmz2viAqYxStAReRVj6MIfNeHodjrzEIt00XoJOE88R'
+import os
 
-# Application definition
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+# Application definition 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
