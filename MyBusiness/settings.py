@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-ivwdqf^2!u2#omdsjv^pi^+_s&j82er3c6(d-cs*741v+z!l9b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pokepackers.com', '34.238.161.6','www.pokepackers.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pokepackers.com', '54.172.50.83','www.pokepackers.com']
 
 # settings.py
 import os
