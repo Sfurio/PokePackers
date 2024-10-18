@@ -20,6 +20,7 @@ from django.shortcuts import redirect, render
 import stripe
 from django.conf import settings
 stripe.api_key = settings.STRIPE_SECRET_KEY
+from django.http import JsonResponse
 
 # Set up logging
 import logging
@@ -44,7 +45,7 @@ def check_stripe_keys_view(request):
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
         return JsonResponse({"error": str(e)}, status=500)
-        
+
 def checkout_views(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
