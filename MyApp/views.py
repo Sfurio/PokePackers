@@ -13,15 +13,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 
-# Set your secret key. Remember to switch to your live secret key in production!
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
 import logging
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import redirect, render
 import stripe
 from django.conf import settings
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -569,3 +567,19 @@ def robots_txt(request):
         "Sitemap: https://www.pokepackers.com/sitemap.xml",
         content_type="text/plain"
     )
+
+
+def check_stripe_keys_view(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    
+    if not stripe.api_key:
+        return JsonResponse({"error": "Stripe API key is not set."}, status=400)
+
+    try:
+        # Attempt to retrieve the Stripe account to verify the key
+        account = stripe.Account.retrieve()
+        return JsonResponse({"success": True, "account": account}, status=200)
+    except stripe.error.AuthenticationError:
+        return JsonResponse({"error": "Invalid API key provided."}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

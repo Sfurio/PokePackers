@@ -50,6 +50,7 @@ urlpatterns = [
     path('checkout/success/', views.checkout_success_view, name='checkout_success'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('check-stripe-keys/', views.check_stripe_keys_view, name='check_stripe_keys'),
 
 ]
 
